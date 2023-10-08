@@ -1,7 +1,7 @@
 import Container from 'react-bootstrap/esm/Container'
 import Footer from './Components/Footer'
 import Header from './Components/Headers'
-import HomeScreen from './Screens/HomeScreen'
+import { Outlet } from 'react-router-dom'
 import React from 'react'
 
 const App = () => {
@@ -10,7 +10,7 @@ const App = () => {
    <Header/>
    <main className='py-3'>
 <Container fluid="md">
-  <HomeScreen/>
+  <Outlet/>
 </Container>
 
    </main>

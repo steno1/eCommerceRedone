@@ -3,6 +3,7 @@ import {FaShoppingCart, FaUser} from "react-icons/fa"
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
+import {LinkContainer} from "react-router-bootstrap"
 import Logo from "../assets/STENOMARKETLOGO.jpg"
 import Nav from 'react-bootstrap/Nav';
 import NavDropdown from 'react-bootstrap/NavDropdown';
@@ -37,9 +38,12 @@ function Header() {
       </style>
 
       <Container fluid>
-        <Navbar.Brand href="#">
+        <LinkContainer to="/">
+        <Navbar.Brand>
             <img src={Logo} alt="Logo" className="Logo"/>
             Steno Market</Navbar.Brand>
+        </LinkContainer>
+       
         <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-${expand}`} />
         <Navbar.Offcanvas
           id={`offcanvasNavbar-expand-${expand}`}
@@ -53,8 +57,13 @@ function Header() {
           </Offcanvas.Header>
           <Offcanvas.Body>
             <Nav className="justify-content-end flex-grow-1 pe-3">
-              <Nav.Link href="/cart"><FaShoppingCart/> Cart</Nav.Link>
-              <Nav.Link href="/login"><FaUser/>Login</Nav.Link>
+              <LinkContainer to="/cart">
+              <Nav.Link><FaShoppingCart/> Cart</Nav.Link>
+              </LinkContainer>
+              
+              <LinkContainer to="/login">
+              <Nav.Link><FaUser/>Login</Nav.Link>
+              </LinkContainer>
               <NavDropdown
                 title="Dropdown"
                 id={`offcanvasNavbarDropdown-expand-${expand}`}

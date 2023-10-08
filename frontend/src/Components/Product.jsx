@@ -1,4 +1,6 @@
 import Card from 'react-bootstrap/Card';
+import { Link } from 'react-router-dom';
+import Rating from './Rating';
 import React from 'react';
 
 const Product = ({product}) => {
@@ -12,21 +14,28 @@ const Product = ({product}) => {
         borderRadius: '20px',
         padding: '20px',
         marginBottom: '20px', // Add margin to separate the cards
-        margin:"10px"
+        margin:"10px",
+        color:"#557A46",
+        fontWeight:"600"
+
       }}
     
     >
-      <a href={`/product/${product._id}`}>
+      <Link to={`/product/${product._id}`}>
       <Card.Img variant="top" src={product.image} />
-      </a>
+      </Link>
       <Card.Body>
-      <a href={`/product/${product._id}`}>
-        <Card.Title as='div'>
+      <Link to={`/product/${product._id}`}>
+        <Card.Title as='div'className='product-title'>
         <strong>{product.name}</strong>
         </Card.Title>
-        </a>
+        </Link>
         <Card.Text as="h3">
         ₦{product.price}
+        </Card.Text>
+        <Card.Text as="div">
+        <Rating value={product.rating} text={`${product.numReviews} Reviews`}
+       />
         </Card.Text>
       </Card.Body>
     </Card>

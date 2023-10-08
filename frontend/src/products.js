@@ -9,7 +9,7 @@ const products = [
     price: 3500,
     countInStock: 10,
     rating: 4.5,
-    numReviews: 12,
+    numReviews: 18,
   },
   {
     _id: '2',
@@ -21,7 +21,7 @@ const products = [
     price: 2500,
     countInStock: 9,
     rating: 4.0,
-    numReviews: 8,
+    numReviews: 42,
   },
   {
     _id: '3',
@@ -33,7 +33,7 @@ const products = [
     price: 25000,
     countInStock: 5,
     rating: 4,
-    numReviews: 12,
+    numReviews: 29,
   },
   {
     _id: '4',
@@ -46,7 +46,7 @@ const products = [
     price: 12000,
     countInStock: 11,
     rating: 5,
-    numReviews: 12,
+    numReviews: 38,
   },
   {
     _id: '5',
@@ -72,7 +72,7 @@ const products = [
     price: 12000,
     countInStock: 6,
     rating: 4.5,
-    numReviews: 12,
+    numReviews: 19,
   },
 
 
@@ -87,7 +87,7 @@ const products = [
     price: 35000,
     countInStock: 6,
     rating: 4.5,
-    numReviews: 12,
+    numReviews: 24,
   },
 
   {
@@ -101,7 +101,7 @@ const products = [
     price: 5000,
     countInStock: 6,
     rating: 4.5,
-    numReviews: 12,
+    numReviews: 34,
   },
 
   {
@@ -115,7 +115,7 @@ const products = [
     price: 6000,
     countInStock: 6,
     rating: 4.5,
-    numReviews: 12,
+    numReviews: 15,
   },
 
   {
@@ -129,7 +129,7 @@ const products = [
     price: 4000,
     countInStock: 6,
     rating: 4.5,
-    numReviews: 12,
+    numReviews: 26,
   },
 
 ]

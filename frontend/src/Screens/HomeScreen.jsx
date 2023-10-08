@@ -1,3 +1,5 @@
+import "./home.css"
+
 import  {Col, Row} from "react-bootstrap"
 
 import Product from "../Components/Product.jsx"

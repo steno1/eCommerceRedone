@@ -1,4 +1,5 @@
 import { Image, ListGroupItem } from 'react-bootstrap';
+import React, { useEffect } from 'react'
 
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
@@ -6,15 +7,29 @@ import Col from 'react-bootstrap/Col';
 import { Link } from 'react-router-dom';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Rating from '../Components/Rating';
-import React from 'react'
 import Row from 'react-bootstrap/Row';
-import products from '../products';
+import axios from 'axios';
 import { useParams } from 'react-router-dom'
+import { useState } from 'react';
 
 const ProductScreen = () => {
+  const [product, setProduct]=useState([])
     const {id:productId}=useParams();
-    const product=products.find((item)=>item._id===productId)
-    console.log(product)
+   useEffect(()=>{
+    const fetchProduct=async()=>{
+      try {
+     const {data}=await axios.get(`/api/products/${productId}`)
+        if(data){
+     setProduct(data)
+        }
+      } catch (error) {
+       console.log(`Error fetching product: ${error}`) 
+      }
+
+    };
+    fetchProduct();
+
+   },[productId])
   return (
     <>
    <Link className='btn btn-light my-3' to="/">

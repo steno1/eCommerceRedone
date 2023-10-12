@@ -1,6 +1,5 @@
 const products = [
   {
-    _id: '1',
     name: 'Steno Tshirt',
     image: '/images/tshirtPng.png',
     description:"The durable fabric ensures long-lasting wear, making it perfect for any occasion. Available in a range of versatile colors, it's a versatile piece that effortlessly complements your personal style",
@@ -12,7 +11,6 @@ const products = [
     numReviews: 18,
   },
   {
-    _id: '2',
     name: 'Princeley Wrapper',
     image: '/images/wrapperPng.png',
     description:"Indulge in luxury with our Elegant Silk Wrapper Cloth, meticulously crafted for those who appreciate refined style. This exquisite piece is made from sumptuous silk, known for its lustrous texture and graceful drape.",
@@ -24,7 +22,7 @@ const products = [
     numReviews: 42,
   },
   {
-    _id: '3',
+   
     name: 'Louis Oxford',
     image: '/images/menShoePng1.png',
     description:"Embrace understated style with our Rugged Leather Casual Shoes. Crafted from genuine, supple leather, these shoes exude a classic, timeless charm. The rich leather upper not only provides durability but also molds to your foot for a custom fit over time.",
@@ -36,7 +34,7 @@ const products = [
     numReviews: 29,
   },
   {
-    _id: '4',
+   
     name: 'Velocity X1',
     image: '/images/sneakerPng.png',
     description:
@@ -49,7 +47,7 @@ const products = [
     numReviews: 38,
   },
   {
-    _id: '5',
+   
     name: 'Elegance Leather Heels RoyalElegance',
     image: '/images/womenShoePng.png',
     description:
@@ -62,7 +60,6 @@ const products = [
     numReviews: 10,
   },
   {
-    _id: '6',
     name: 'Radiant Crystal Embellished Pumps',
     image: '/images/fancyWomenShoe.png',
     description:
@@ -77,7 +74,6 @@ const products = [
 
 
   {
-    _id: '7',
     name: 'Golden Elegance Statement Necklace',
     image: '/images/GoldNecklace.png',
     description:
@@ -91,7 +87,7 @@ const products = [
   },
 
   {
-    _id: '8',
+   
     name: 'Radiant Sunflower UV-Protective Sunglasses',
     image: '/images/womenGlass1.jpg',
     description:
@@ -105,7 +101,6 @@ const products = [
   },
 
   {
-    _id: '9',
     name: ' Celestial Cat-Eye Sunglasses',
     image: '/images/womenGlass2.png',
     description:
@@ -119,7 +114,7 @@ const products = [
   },
 
   {
-    _id: '10',
+    
     name: '  Effortless Elegance Draped Blouse Tee',
     image: '/images/tshirtLady.jpg',
     description:

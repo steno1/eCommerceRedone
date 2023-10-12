@@ -4,6 +4,7 @@ import Rating from './Rating';
 import React from 'react';
 
 const Product = ({product}) => {
+  //product prop from home screen
   return (
     <Card 
     style={{

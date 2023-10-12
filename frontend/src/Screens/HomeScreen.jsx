@@ -27,10 +27,10 @@ fetchProducts();
   },[])
   return (
     <>
-      <h1>Newest Products</h1>
+      <h1>Freshest Arrivals</h1>
       <Row>
-        {products.map((product)=>(
-   <Col sm={12} md={6} lg={4} xl={4}  key={product._id}>
+        {products.map((product, index)=>(
+   <Col sm={12} md={6} lg={4} xl={4}  key={index}>
    <Product product={product}/>
    </Col>
  

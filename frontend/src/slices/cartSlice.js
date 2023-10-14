@@ -1,15 +1,11 @@
 // Importing createSlice from Redux Toolkit
 
 import { createSlice } from '@reduxjs/toolkit';
+import { updateCart } from '../utils/cartUtils';
 
 // Checking if there is an existing cart in local storage and using it as initialState, or setting an empty cart if not
 const initialState = localStorage.getItem("cart") ?
   JSON.parse(localStorage.getItem("cart")) : { cartItems: [] };
-
-// Helper function to round a number to 2 decimal places
-const addDecimal = (num) => {
-  return (Math.round(num * 100) / 100).toFixed(2)
-}
 
 // Creating a slice of the Redux store for the cart
 const cartSlice = createSlice({
@@ -30,23 +26,7 @@ const cartSlice = createSlice({
         // If the item is new to the cart
         state.cartItems = [...state.cartItems, item];
       }
-
-      // Calculate items price
-      state.itemsPrice = addDecimal(state.cartItems.reduce((acc, item) => acc + item.price * item.qty, 0));
-
-      // Determine shipping price (if order is > 5000 naira, it's free; else 1000 naira)
-      state.shippingPrice = addDecimal(state.itemsPrice > 5000 ? 0 : 1000);
-
-      // Calculate tax price (15% tax)
-      state.taxPrice = addDecimal(Number((0.15 * state.itemsPrice).toFixed(2)));
-
-      // Calculate total price
-      state.totalPrice = (
-        Number(state.itemsPrice) + Number(state.shippingPrice) + Number(state.taxPrice)
-      ).toFixed(2);
-
-      // Store the updated cart in local storage
-      localStorage.setItem("cart", JSON.stringify(state));
+      return updateCart(state)
     },
   },
 });

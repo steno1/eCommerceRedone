@@ -1,5 +1,6 @@
 import {FaShoppingCart, FaUser} from "react-icons/fa"
 
+import { Badge } from "react-bootstrap";
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
@@ -9,8 +10,11 @@ import Nav from 'react-bootstrap/Nav';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import Navbar from 'react-bootstrap/Navbar';
 import Offcanvas from 'react-bootstrap/Offcanvas';
+import { useSelector } from "react-redux/es/hooks/useSelector";
 
 function Header() {
+  const { cartItems}=useSelector((state)=>state.cart)
+ 
   const expand = 'md'; 
 
   return (
@@ -58,7 +62,12 @@ function Header() {
           <Offcanvas.Body>
             <Nav className="justify-content-end flex-grow-1 pe-3">
               <LinkContainer to="/cart">
-              <Nav.Link><FaShoppingCart/> Cart</Nav.Link>
+              <Nav.Link><FaShoppingCart/> Cart
+              {cartItems.length>0&&<Badge pill bg="success" 
+              style={{marginLeft:"5px", }} >
+                {cartItems.reduce((acc, curr)=>acc+curr.qty, 0)}
+                </Badge>}
+              </Nav.Link>
               </LinkContainer>
               
               <LinkContainer to="/login">

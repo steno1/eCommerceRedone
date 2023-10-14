@@ -4,6 +4,8 @@ import "./home.css";
 
 import { Col, Row } from "react-bootstrap";
 
+import Loader from "../Components/Loader";
+import Message from "../Components/Message";
 import Product from "../Components/Product.jsx";
 import React from 'react';
 import { useGetProductsQuery } from "../slices/productApiSlice";
@@ -19,13 +21,14 @@ const HomeScreen = () => {
     <>
       {/* This is a conditional rendering block. */}
       {isLoading ? (  
-        // If `isLoading` is true, render a heading "Loading...".
-        <h2>Loading...</h2>
+        // If `isLoading` display Loader component".
+       <Loader/>
       ) : error ? (  
-        // If there is an error, render a div with the error message.
-        <div>
-          {error?.data?.message || error.error}
-        </div>
+        // If there is an error, render a Message component with the error message.
+        <Message variant="danger">
+            {error?.data?.message || error.error}
+        </Message>
+       
       ) : (
         // If there are no errors and data is loaded, render the following content:
         <>

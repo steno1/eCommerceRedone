@@ -1,55 +1,95 @@
+// Importing necessary dependencies
+
+import Jwt from 'jsonwebtoken';
 import User from '../model/userModel.js';
 import asyncHandler from 'express-async-handler';
 
-//auth User/Login
-const authUser=asyncHandler(async(req, res)=>{
-res.send("auth user")
-})
+// JSON Web Token library
+ // User model
+ // Async handler utility
 
-//auth User/Login
-const registerUser=asyncHandler(async(req, res)=>{
-    res.send("Register user")
-    })
+// Route handler for user authentication (Login)
+const authUser = asyncHandler(async (req, res) => {
+    const { email, password } = req.body;  // Extracting email and password from request body
+    const user = await User.findOne({ email: email });  // Finding user by email
 
-    //Logout
-const logoutUser=asyncHandler(async(req, res)=>{
-    res.send("logout user")
-    })
+    if (user && (await user.matchPassword(password))) {
+        // If user exists and password matches
+        const token = Jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
+            expiresIn: "30d"  // Generating a JSON Web Token
+        });
 
-//getUserProfile
-  const getUserProfile=asyncHandler(async(req, res)=>{
-    res.send("get user profile")
-    })
+        // Setting JWT as HTTP-only cookie
+        res.cookie("jwt", token, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV !== "development",
+            sameSite: "strict",
+            maxAge: 30 * 24 * 60 * 60 * 1000  // Expiry time of the cookie (30 days)
+        });
 
-    //update getUserProfile
-  const updateUserProfile=asyncHandler(async(req, res)=>{
-    res.send("update user profile")
-    })
+        // Sending JSON response with user information
+        res.json({
+            _id: user._id,
+            email: user.email,
+            name: user.name,
+            isAdmin: user.isAdmin
+        });
+    } else {
+        // If user doesn't exist or password doesn't match, send an error response
+        res.status(401);
+        throw new Error("Invalid email or Password");
+    }
+});
 
-//all users/Admin
-const getUsers=asyncHandler(async(req, res)=>{
+// Route handler for user registration
+const registerUser = asyncHandler(async (req, res) => {
+    res.send("Register user");  // Placeholder response for user registration
+});
 
-    res.send("get all users")
-})
+// Route handler for user logout
+const logoutUser = asyncHandler(async (req, res) => {
+    res.send("logout user");  // Placeholder response for user logout
+});
 
-//delete
-const deleteUsers=asyncHandler(async(req, res)=>{
+// Route handler for getting user profile
+const getUserProfile = asyncHandler(async (req, res) => {
+    res.send("get user profile");  // Placeholder response for getting user profile
+});
 
-    res.send("delete user")
-})
+// Route handler for updating user profile
+const updateUserProfile = asyncHandler(async (req, res) => {
+    res.send("update user profile");  // Placeholder response for updating user profile
+});
 
-//single user/getUserById
+// Route handler for getting all users (Admin)
+const getUsers = asyncHandler(async (req, res) => {
+    res.send("get all users");  // Placeholder response for getting all users
+});
 
-const getSingleUser=asyncHandler(async(req, res)=>{
-   res.send("get single user or by id")
-    })
+// Route handler for deleting a user
+const deleteUsers = asyncHandler(async (req, res) => {
+    res.send("delete user");  // Placeholder response for deleting a user
+});
 
-    //update user
-    const updateUsers=asyncHandler(async(req, res)=>{
-        res.send("update users")
-         })
-  
+// Route handler for getting a single user by ID
+const getSingleUser = asyncHandler(async (req, res) => {
+    res.send("get single user or by id");  // Placeholder response for getting a single user
+});
 
-export {authUser, getSingleUser, getUsers, getUserProfile, 
-    updateUserProfile, updateUsers, registerUser, logoutUser,
-deleteUsers}
+// Route handler for updating user information
+const updateUsers = asyncHandler(async (req, res) => {
+    res.send("update users");  // Placeholder response for updating user information
+});
+
+// Exporting all the route handlers
+export {
+    authUser,
+    getSingleUser,
+    getUsers,
+    getUserProfile,
+    updateUserProfile,
+    updateUsers,
+    registerUser,
+    logoutUser,
+    deleteUsers
+};

@@ -12,6 +12,7 @@ import {
 import App from './App';
 import CartScreen from './Screens/CartScreen';
 import HomeScreen from './Screens/HomeScreen';
+import LoginScreen from './Screens/LoginScreen';
 import ProductScreen from './Screens/ProductScreen';
 import { Provider } from 'react-redux'
 import React from 'react';
@@ -24,6 +25,8 @@ const router=createBrowserRouter(
       <Route index={true} path='/' element={<HomeScreen/>}/>
       <Route path='/product/:id' element={<ProductScreen/>}/>
       <Route path='/cart' element={<CartScreen/>}/>
+      <Route path='/login' element={<LoginScreen/>}/>
+      
      
     </Route>
   )

@@ -1,11 +1,11 @@
-import {FaShoppingCart, FaUser} from "react-icons/fa"
+import { FaShoppingCart, FaUser } from "react-icons/fa";
 
 import { Badge } from "react-bootstrap";
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
-import {LinkContainer} from "react-router-bootstrap"
-import Logo from "../assets/STENOMARKETLOGO.jpg"
+import { LinkContainer } from "react-router-bootstrap";
+import Logo from "../assets/STENOMARKETLOGO.jpg";
 import Nav from 'react-bootstrap/Nav';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import Navbar from 'react-bootstrap/Navbar';
@@ -13,41 +13,45 @@ import Offcanvas from 'react-bootstrap/Offcanvas';
 import { useSelector } from "react-redux/es/hooks/useSelector";
 
 function Header() {
-  const { cartItems}=useSelector((state)=>state.cart)
- 
-  const expand = 'md'; 
+  const { cartItems } = useSelector((state) => state.cart);
+  const { userInfo } = useSelector((state) => state.auth);
+
+  const logoutHandler = () => {
+    console.log("logout");
+  }
+
+  const expand = 'md';
 
   return (
-    <Navbar  expand={expand} className="custom-navbar"
-     >
- <style>
+    <Navbar expand={expand} className="custom-navbar">
+      <style>
         {`
           .custom-navbar {
-            background-color: #343a40; /* Dark background color */
+            background-color: #343a40;
           }
           .custom-navbar .navbar-brand,
           .custom-navbar .nav-link {
-            color: #ffffff !important; /* White text color */
+            color: #ffffff !important;
           }
           .custom-navbar .navbar-toggler-icon,
           .custom-navbar .navbar-toggler-icon:focus {
-            background-color: #ffffff; /* White color for toggle icon */
-            
-            border-radius: 4px; /* Optional: Add border radius */
+            background-color: #ffffff;
+            border-radius: 4px;
           }
           .custom-navbar .navbar-toggler:focus {
-            outline: none; /* Remove outline when toggled */
+            outline: none;
           }
         `}
       </style>
 
       <Container fluid>
         <LinkContainer to="/">
-        <Navbar.Brand>
-            <img src={Logo} alt="Logo" className="Logo"/>
-            Steno Market</Navbar.Brand>
+          <Navbar.Brand>
+            <img src={Logo} alt="Logo" className="Logo" />
+            Steno Market
+          </Navbar.Brand>
         </LinkContainer>
-       
+
         <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-${expand}`} />
         <Navbar.Offcanvas
           id={`offcanvasNavbar-expand-${expand}`}
@@ -62,30 +66,34 @@ function Header() {
           <Offcanvas.Body>
             <Nav className="justify-content-end flex-grow-1 pe-3">
               <LinkContainer to="/cart">
-              <Nav.Link><FaShoppingCart/> Cart
-              {cartItems.length>0&&<Badge pill bg="success" 
-              style={{marginLeft:"5px", }} >
-                {cartItems.reduce((acc, curr)=>acc+curr.qty, 0)}
-                </Badge>}
-              </Nav.Link>
+                <Nav.Link>
+                  <FaShoppingCart /> Cart
+                  {cartItems.length > 0 && <Badge pill bg="success" style={{ marginLeft: "5px" }} >
+                    {cartItems.reduce((acc, curr) => acc + curr.qty, 0)}
+                  </Badge>}
+                </Nav.Link>
               </LinkContainer>
-              
-              <LinkContainer to="/login">
-              <Nav.Link><FaUser/>Login</Nav.Link>
-              </LinkContainer>
-              <NavDropdown
-                title="Dropdown"
-                id={`offcanvasNavbarDropdown-expand-${expand}`}
-              >
-                <NavDropdown.Item href="#action3">Action</NavDropdown.Item>
-                <NavDropdown.Item href="#action4">
-                  Another action
-                </NavDropdown.Item>
-                <NavDropdown.Divider />
-                <NavDropdown.Item href="#action5">
-                  Something else here
-                </NavDropdown.Item>
-              </NavDropdown>
+              {userInfo ? (
+                <NavDropdown style={{marginBottom:"10px"}}
+                  title={userInfo.name}
+                  id="username"
+                >
+                  <LinkContainer to='/profile'>
+                    <NavDropdown.Item>
+                      Profile
+                    </NavDropdown.Item>
+                  </LinkContainer>
+                  <NavDropdown.Divider />
+                  <NavDropdown.Item onClick={logoutHandler}>
+                    Logout
+                  </NavDropdown.Item>
+                </NavDropdown>
+              ) : (
+                <LinkContainer to="/login">
+                  <Nav.Link><FaUser />Sign In</Nav.Link>
+                </LinkContainer>
+              )}
+
             </Nav>
             <Form className="d-flex">
               <Form.Control

@@ -1,8 +1,8 @@
 // Importing necessary dependencies
 
-import Jwt from 'jsonwebtoken';
 import User from '../model/userModel.js';
 import asyncHandler from 'express-async-handler';
+import jwt from 'jsonwebtoken';
 
 // JSON Web Token library
  // User model
@@ -15,7 +15,8 @@ const authUser = asyncHandler(async (req, res) => {
 
     if (user && (await user.matchPassword(password))) {
         // If user exists and password matches
-        const token = Jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
+        const token = jwt.sign({ userId: user._id },
+             process.env.JWT_SECRET, {
             expiresIn: "30d"  // Generating a JSON Web Token
         });
 

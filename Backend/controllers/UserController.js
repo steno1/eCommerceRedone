@@ -1,12 +1,9 @@
 // Importing necessary dependencies
 
-import User from '../model/userModel.js';
-import asyncHandler from 'express-async-handler';
-import jwt from 'jsonwebtoken';
-
-// JSON Web Token library
- // User model
- // Async handler utility
+import GenerateToken from '../utils/GenerateToken.js'; // Importing a function for generating JWT tokens.
+import {StatusCodes} from 'http-status-codes'; // Importing HTTP status codes for handling responses.
+import User from '../model/userModel.js'; // Importing a user model.
+import asyncHandler from 'express-async-handler'; // Importing middleware for handling asynchronous functions.
 
 // Route handler for user authentication (Login)
 const authUser = asyncHandler(async (req, res) => {
@@ -14,19 +11,7 @@ const authUser = asyncHandler(async (req, res) => {
     const user = await User.findOne({ email: email });  // Finding user by email
 
     if (user && (await user.matchPassword(password))) {
-        // If user exists and password matches
-        const token = jwt.sign({ userId: user._id },
-             process.env.JWT_SECRET, {
-            expiresIn: "30d"  // Generating a JSON Web Token
-        });
-
-        // Setting JWT as HTTP-only cookie
-        res.cookie("jwt", token, {
-            httpOnly: true,
-            secure: process.env.NODE_ENV !== "development",
-            sameSite: "strict",
-            maxAge: 30 * 24 * 60 * 60 * 1000  // Expiry time of the cookie (30 days)
-        });
+        GenerateToken(res,user._id) // Generating and setting a JWT token in the response header.
 
         // Sending JSON response with user information
         res.json({
@@ -37,34 +22,120 @@ const authUser = asyncHandler(async (req, res) => {
         });
     } else {
         // If user doesn't exist or password doesn't match, send an error response
-        res.status(401);
+        res.status(StatusCodes.UNAUTHORIZED);
         throw new Error("Invalid email or Password");
     }
 });
 
-// Route handler for user registration
+// Defining the registerUser function with asyncHandler middleware.
 const registerUser = asyncHandler(async (req, res) => {
-    res.send("Register user");  // Placeholder response for user registration
+    // Destructuring the user registration information from the request body.
+    const { name, email, password } = req.body;
+
+    // Checking if a user with the provided email already exists in the database.
+    const userExist = await User.findOne({ email });
+
+    if (userExist) {
+        // If a user with the provided email already exists, respond with a 400 Bad Request status and throw an error.
+        res.status(StatusCodes.BAD_REQUEST);
+        throw new Error("User already exists"); // Informing the client that the user already exists.
+    }
+
+    // If the user with the provided email does not exist, proceed with user registration.
+    const user = await User.create({
+        name,
+        email,
+        password,
+    });
+
+    if (user) {
+        // If user registration is successful, generate a JWT token and set it in the response header.
+        GenerateToken(res, user._id);
+
+        // Responding to the client with a 201 Created status and a JSON object
+        // containing user information (excluding the password).
+        res.status(StatusCodes.CREATED).json({
+            _id: user._id, // Unique identifier for the newly registered user.
+            name: user.name,  // User's full name.
+            email: user.email, // User's email address.
+            isAdmin: user.isAdmin, // Indicates whether the user has administrative privileges.
+        });
+
+    } else {
+        // If user registration fails for any reason, respond with a 400 Bad Request status and throw an error.
+        res.status(StatusCodes.BAD_REQUEST);
+        throw new Error("Invalid user data"); // Informing the client that the provided user data is invalid.
+    }
 });
 
-// Route handler for user logout
 const logoutUser = asyncHandler(async (req, res) => {
-    res.send("logout user");  // Placeholder response for user logout
+    res.cookie("jwt", "", {
+        httpOnly: true,
+        expires: new Date(0), 
+       
+    });
+    res.status(200).json({ message: "Logged out successfully" });
 });
 
 // Route handler for getting user profile
 const getUserProfile = asyncHandler(async (req, res) => {
-    res.send("get user profile");  // Placeholder response for getting user profile
+    // Retrieve the user's profile based on their unique ID from the database
+    const user = await User.findById(req.user._id);
+
+    if (user) {
+        // If user is found, respond with a JSON object containing user information
+        res.status(StatusCodes.OK).json({
+            _id: user._id,    // Unique identifier for the user
+            name: user.name,  // User's name
+            email: user.email,  // User's email address
+            isAdmin: user.isAdmin  // Indicates if the user has administrative privileges
+        });
+    } else {
+        // If user is not found, respond with a 404 Not Found status and throw an error
+        res.status(StatusCodes.NOT_FOUND);
+        throw new Error("User not found");
+    }
 });
 
 // Route handler for updating user profile
 const updateUserProfile = asyncHandler(async (req, res) => {
-    res.send("update user profile");  // Placeholder response for updating user profile
+    const user=await User.findById(req.user._id) 
+    // Find the user by their unique identifier (ID) extracted from the request's user object.
+
+    if(user){ 
+        // If the user is found in the database.
+        user.name=req.body.name || user.name; 
+        // Update the user's name with the value from the request body, or keep the current value if not provided.
+        
+        user.email=req.body.email || user.email
+        // Update the user's email with the value from the request body, or keep the current value if not provided.
+
+        if(req.body.password){
+            user.password=req.body.password
+            // If a password is provided in the request body, update the user's password.
+        }
+        
+        const updatedUser=await user.save();
+        // Save the updated user object back to the database.
+
+        res.status(StatusCodes.OK).json({
+            _id:updatedUser._id,
+            name:updatedUser.name,
+            email:updatedUser.email,
+            isAdmin:updatedUser.isAdmin
+        })
+        // Respond with a JSON object containing the updated user information.
+    } else {
+        // If the user is not found in the database.
+        res.status(StatusCodes.NOT_FOUND);
+        throw new Error("User not found");
+        // Respond with a 404 Not Found status and throw an error indicating that the user was not found.
+    }
 });
 
 // Route handler for getting all users (Admin)
 const getUsers = asyncHandler(async (req, res) => {
-    res.send("get all users");  // Placeholder response for getting all users
+    // Implementation for getting all users goes here
 });
 
 // Route handler for deleting a user

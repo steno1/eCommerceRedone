@@ -23,7 +23,7 @@ function Header() {
   const expand = 'md';
 
   return (
-    <Navbar expand={expand} className="custom-navbar">
+    <Navbar bg="primary" variant="dark" expand="lg" collapseOnSelect>
       <style>
         {`
           .custom-navbar {
@@ -90,7 +90,9 @@ function Header() {
                 </NavDropdown>
               ) : (
                 <LinkContainer to="/login">
-                  <Nav.Link><FaUser />Sign In</Nav.Link>
+                  <Nav.Link>
+                    <FaUser />Sign In
+                    </Nav.Link>
                 </LinkContainer>
               )}
 

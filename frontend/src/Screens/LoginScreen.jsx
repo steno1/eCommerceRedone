@@ -76,6 +76,7 @@ const LoginScreen = () => {
     return (
         <FormContainer> 
     {/* Used 'FormContainer' component as a wrapper.*/} 
+    <h1>Sign In</h1>
 
             <Form onSubmit={submitHandler}> 
 {/*Created a form with 'submitHandler'

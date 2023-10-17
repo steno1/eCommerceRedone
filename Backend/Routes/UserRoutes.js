@@ -15,7 +15,7 @@ import express from "express";
 
 const router = express.Router();
 
-router.route("/").post(registerUser)
+router.route("/register").post(registerUser)
 // admin for getUsers
 .get(protect, admin, getUsers)
 

@@ -23,12 +23,17 @@ const authSlice = createSlice({
 state.userInfo = action.payload; // Update the 'userInfo' field in the state with the new payload.
  localStorage.setItem("userInfo", JSON.stringify(action.payload)); // Update the localStorage with the new userInfo.
 
+        },
+        logout:(state, action)=>{
+            state.userInfo=null;
+            localStorage.removeItem("userInfo")
         }
+
     }
 })
 
 // Exporting the 'setCredential' action creator.
-export const { setCredential } = authSlice.actions;
+export const { setCredential, logout } = authSlice.actions;
 
 // Exporting the reducer function, which will be used in the Redux store.
 export default authSlice.reducer;

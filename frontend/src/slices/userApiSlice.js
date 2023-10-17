@@ -19,8 +19,23 @@ const userApiSlice = apiSlice.injectEndpoints({
                 body: data, // Sending data in the request body
             }),
         }),
+        logoutApiCall:builder.mutation({
+            query:()=>({
+              url:`${USER_URL}/logout`,
+              method: "POST"
+            })
+        }),
+        registerUser:builder.mutation({
+            query:(data)=>({
+                url:`${USER_URL}/register`,
+                method:"POST",
+                body:data
+            })
+        })
     }),
 });
 
 // Exporting a hook named useLoginMutation from userApiSlice
-export const { useLoginMutation } = userApiSlice;
+export const { useLoginMutation,
+     useLogoutApiCallMutation,
+      useRegisterUserMutation } = userApiSlice;

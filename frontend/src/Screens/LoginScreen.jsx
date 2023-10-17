@@ -12,41 +12,6 @@ import { useEffect } from 'react';
 import { useLoginMutation } from '../slices/userApiSlice';
 import { useSelector } from 'react-redux/es/hooks/useSelector';
 
-// Imported Button, Col, Form, and Row components from 'react-bootstrap' library
-
-
-// Imported React and useState from the 'react' library
-
-
-// Imported useLocation and useNavigate hooks from 'react-router-dom'
-
-
-// Imported a custom component 'FormContainer' from the relative path '../Components/formContainer'
-
-
-// Imported Link component from 'react-router-dom'
-
-
-// Imported Loader component from the relative path '../Components/Loader'
-
-
-// Imported the 'setCredential' action from the '../slices/authSlice' file
-
-
-// Imported the 'toast' function from the 'react-toastify' library
-
-
-// Imported useDispatch hook from 'react-redux'
-
-
-// Imported useEffect hook from 'react'
-
-
-// Imported the 'useLoginMutation' hook from the '../slices/userApiSlice' file
-
-
-// Imported useSelector hook from 'react-redux/es/hooks/useSelector'
-
 const LoginScreen = () => { 
 // Defined a functional component named 'LoginScreen'
 

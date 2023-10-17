@@ -5,7 +5,11 @@ import { updateCart } from '../utils/cartUtils';
 
 // Checking if there is an existing cart in local storage and using it as initialState, or setting an empty cart if not
 const initialState = localStorage.getItem("cart") ?
-  JSON.parse(localStorage.getItem("cart")) : { cartItems: [] };
+  JSON.parse(localStorage.getItem("cart")) :
+   { cartItems: [],
+    shippingAddress:{},
+    paymentMethod:"PayPal"
+  };
 
 // Creating a slice of the Redux store for the cart
 const cartSlice = createSlice({

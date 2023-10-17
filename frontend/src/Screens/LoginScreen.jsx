@@ -89,7 +89,8 @@ const LoginScreen = () => {
 
               <Form.Control type="email"
                placeholder="Enter email" value={email}
-         onChange={(e) => setEmail(e.target.value)} /> 
+         onChange={(e) => setEmail(e.target.value)} 
+         style={{color:"black"}} /> 
          {/* Created an input field for email with controlled 
          value and event handler to update 'email' state. */}
  
@@ -101,7 +102,8 @@ const LoginScreen = () => {
 
          <Form.Control type="password" placeholder="Password"
              value={password}
-          onChange={(e) => setPassword(e.target.value)} /> 
+          onChange={(e) => setPassword(e.target.value)} 
+          style={{color:"black"}} /> 
 {/* Created an input field for password with 
 controlled value and event handler to update 'password' state.*/}
                     </Form.Group>

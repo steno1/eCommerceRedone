@@ -95,6 +95,7 @@ const RegisterScreen = () => {
               placeholder="Enter your name"
               value={name}
               onChange={(e) => setName(e.target.value)}
+              style={{color:"black"}}
             /> 
             {/* Created an input field for name with controlled value and event handler to update 'name' state. */}
           </Form.Group>
@@ -107,6 +108,7 @@ const RegisterScreen = () => {
               placeholder="Enter email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              style={{color:"black"}}
             /> 
             {/* Created an input field for email with controlled value and event handler to update 'email' state. */}
           </Form.Group>
@@ -119,6 +121,7 @@ const RegisterScreen = () => {
               placeholder="Password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              style={{color:"black"}}
             /> 
             {/* Created an input field for password with controlled value and event handler to update 'password' state. */}
           </Form.Group>
@@ -131,6 +134,7 @@ const RegisterScreen = () => {
               placeholder="Confirm your password"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
+              style={{color:"black"}}
             /> 
             {/* Created an input field for password with controlled value and event handler to update 'password' state. */}
           </Form.Group>  

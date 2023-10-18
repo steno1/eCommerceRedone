@@ -41,10 +41,15 @@ return updateCart(state)
     saveShippingAddress:(state, action)=>{
       state.shippingAddress=action.payload
       return updateCart(state)
+    },
+    savePaymentMethod:(state, action)=>{
+      state.paymentMethod=action.payload
+      return updateCart(state)
     }
   },
 });
 
 // Exporting the action creators (addToCart, removeItem, clearCart) and the reducer
-export const { addToCart, removeFromCart,clearCart, saveShippingAddress } = cartSlice.actions;
+export const { addToCart, removeFromCart,clearCart, 
+  saveShippingAddress, savePaymentMethod } = cartSlice.actions;
 export default cartSlice.reducer;

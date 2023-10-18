@@ -1,5 +1,6 @@
 import { Button, Form, FormControl, FormGroup, FormLabel } from 'react-bootstrap'; // Importing specific components from 'react-bootstrap'
 
+import CheckoutStep from '../Components/CheckoutStep';
 import FormContainer from '../Components/formContainer'; // Importing a custom component 'FormContainer'
 import React from 'react'; // Importing React object
 import { saveShippingAddress } from '../slices/cartSlice'; // Importing function 'saveShippingAddress' from '../slices/cartSlice'
@@ -34,6 +35,7 @@ const ShippingScreen = () => {
   return (
     <FormContainer>
       <h1>Shipping</h1>
+      <CheckoutStep step1 step2/>
 
       <Form onSubmit={submitHandler}>
         {/* Form fields for address, city, postal code, and country */}

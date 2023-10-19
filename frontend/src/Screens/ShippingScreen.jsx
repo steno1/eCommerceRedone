@@ -22,9 +22,11 @@ const ShippingScreen = () => {
   const navigate = useNavigate(); // Initializing the 'navigate' function for navigating routes
 
   // Handler function for form submission
-  const submitHandler = () => {
+  const submitHandler = (e) => {
+    e.preventDefault();
     try {
-      dispatch(saveShippingAddress({ address, city, postalCode, country })); // Dispatching an action to save shipping address
+      dispatch(saveShippingAddress({ address, city, 
+        postalCode, country })); // Dispatching an action to save shipping address
       navigate("/payment"); // Navigating to the '/payment' route
     } catch (error) {
       console.log(error); // Logging any errors that occur

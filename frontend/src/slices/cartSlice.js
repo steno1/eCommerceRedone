@@ -4,12 +4,11 @@ import { createSlice } from '@reduxjs/toolkit';
 import { updateCart } from '../utils/cartUtils';
 
 // Checking if there is an existing cart in local storage and using it as initialState, or setting an empty cart if not
-const initialState = localStorage.getItem("cart") ?
-  JSON.parse(localStorage.getItem("cart")) :
-   { cartItems: [],
-    shippingAddress:{},
-    paymentMethod:"PayPal"
-  };
+const initialState = localStorage.getItem("cart")
+  ? JSON.parse(localStorage.getItem("cart"))
+  : { cartItems: [],
+     shippingAddress:{},
+    paymentMethod:"paypal" };
 
 // Creating a slice of the Redux store for the cart
 const cartSlice = createSlice({
@@ -45,11 +44,17 @@ return updateCart(state)
     savePaymentMethod:(state, action)=>{
       state.paymentMethod=action.payload
       return updateCart(state)
-    }
+    },
+    clearCartItems:(state, action)=>{
+state.cartItems=[]
+return updateCart(state)
+    },
+   
   },
 });
 
 // Exporting the action creators (addToCart, removeItem, clearCart) and the reducer
 export const { addToCart, removeFromCart,clearCart, 
-  saveShippingAddress, savePaymentMethod } = cartSlice.actions;
+  saveShippingAddress, savePaymentMethod,
+    clearCartItems } = cartSlice.actions;
 export default cartSlice.reducer;

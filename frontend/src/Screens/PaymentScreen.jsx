@@ -38,9 +38,7 @@ const PaymentScreen = () => {
         e.preventDefault();
         
         // Dispatching an action to save the selected payment method
-        dispatch(savePaymentMethod({
-            paymentMethod
-        }));
+        dispatch(savePaymentMethod(paymentMethod));
         
         // Navigating to the place order screen
         navigate("/placeorder");

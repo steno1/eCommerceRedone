@@ -11,7 +11,7 @@ export const updateCart=(state)=>{
 
       // Determine shipping price (if order is > 5000 naira, it's free; else 1000 naira)
       state.shippingPrice = addDecimal(state.itemsPrice > 5000 ? 0: 1000);
-
+      
       // Calculate tax price (15% tax)
       state.taxPrice = addDecimal(Number((0.15 * state.itemsPrice).toFixed(2)));
 

@@ -2,13 +2,13 @@ import {
      Button,
      Card,
      Col,
+     Image,
      ListGroup,
      ListGroupItem,
      Row
 } from 'react-bootstrap'
 
 import CheckoutStep from '../Components/CheckoutStep'
-import {Image} from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import Loader from '../Components/Loader'
 import Message from '../Components/Message'
@@ -22,7 +22,7 @@ import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 
 const PlaceOrderScreen = () => {
-    const navigate=useNavigate;
+    const navigate=useNavigate();
     const dispatch=useDispatch();
     const cart=useSelector((state)=>state.cart)
     useEffect(()=>{
@@ -31,7 +31,7 @@ const PlaceOrderScreen = () => {
         }else if(!cart.paymentMethod){
             navigate("/payment")
         }
-    },[cart.shippingAddress.address,cart.paymentMethod, navigate])
+    },[cart.paymentMethod,cart.shippingAddress.address, navigate])
 
 
    const [createOrder, {isLoading, error}]=useCreateOrderMutation() 
@@ -76,7 +76,7 @@ try {
                 <ListGroupItem>
                 <h2>Order Items</h2>
                 {cart.cartItems.length===0?(
-                    <Message>Your Cart is empty</Message>
+                    <Message>Your Cart is empty!</Message>
                 ):(
                  <ListGroup>
                     {cart.cartItems.map((item, index)=>(

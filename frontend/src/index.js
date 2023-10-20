@@ -14,6 +14,7 @@ import CartScreen from './Screens/CartScreen';
 import HomeScreen from './Screens/HomeScreen';
 import LoginScreen from './Screens/LoginScreen';
 import OrderScreen from './Screens/OrderScreen';
+import { PayPalScriptProvider }from "@paypal/react-paypal-js";
 import PaymentScreen from './Screens/PaymentScreen';
 import PlaceOrderScreen from './Screens/PlaceOrderScreen';
 import PrivateRoute from './Components/PrivateRoute';
@@ -49,8 +50,10 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-
-    <RouterProvider router={router} />
+<PayPalScriptProvider >
+<RouterProvider router={router} />
+</PayPalScriptProvider>
+   
     </Provider>
   
   </React.StrictMode>

@@ -65,7 +65,7 @@ const getOrderById = asyncHandler(async (req, res) => {
   }
 });
 
-// function to update an order to paid
+// function to update an order to paid(pay order)
 const updateOrderToPaid = asyncHandler(async (req, res) => {
 const order=await Order.findById(req.params.id)
 if(order){

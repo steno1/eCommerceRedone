@@ -3,6 +3,8 @@ import { apiSlice } from './apiSlices';
 
 // This line defines a constant `productApiSlice` and assigns it the result of calling `apiSlice.injectEndpoints()`.
 export const productApiSlice = apiSlice.injectEndpoints({
+    // global configuration for the api
+    refetchOnReconnect: true,
 
   // This object contains a property named `endpoints`, which is a function that takes a `builder` as a parameter.
   endpoints: (builder) => ({

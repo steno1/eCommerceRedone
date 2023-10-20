@@ -1,7 +1,8 @@
 import { apiSlice } from './slices/apiSlices';
 import authSliceReducer from './slices/authSlice';
 import cartSliceReducer from './slices/cartSlice';
-import { configureStore } from '@reduxjs/toolkit'
+import { configureStore } from '@reduxjs/toolkit';
+import { setupListeners } from '@reduxjs/toolkit/query'
 
 const store = configureStore({
   reducer: {
@@ -15,5 +16,7 @@ const store = configureStore({
   getDefaultMiddleware().concat(apiSlice.middleware),
   devTools:true
 })
+// enable listener behavior for the store
+setupListeners(store.dispatch)
 
 export default store;

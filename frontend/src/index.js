@@ -13,6 +13,7 @@ import App from './App';
 import CartScreen from './Screens/CartScreen';
 import HomeScreen from './Screens/HomeScreen';
 import LoginScreen from './Screens/LoginScreen';
+import OrderScreen from './Screens/OrderScreen';
 import PaymentScreen from './Screens/PaymentScreen';
 import PlaceOrderScreen from './Screens/PlaceOrderScreen';
 import PrivateRoute from './Components/PrivateRoute';
@@ -38,6 +39,7 @@ const router=createBrowserRouter(
       <Route path='/shipping' element={<ShippingScreen/>}/>
       <Route path='/payment' element={<PaymentScreen/>}/>
       <Route path='/placeorder' element={<PlaceOrderScreen/>}/>
+      <Route path='/order/:id' element={<OrderScreen/>}/>
       </Route>
      
     </Route>

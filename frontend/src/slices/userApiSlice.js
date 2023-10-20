@@ -8,6 +8,8 @@ import { apiSlice } from "./apiSlices";
 
 // Creating a userApiSlice using apiSlice.injectEndpoints
 const userApiSlice = apiSlice.injectEndpoints({
+      // global configuration for the api
+  refetchOnReconnect: true,
     // Defining endpoints using a builder function
     endpoints: (builder) => ({
         // Creating a 'login' mutation endpoint

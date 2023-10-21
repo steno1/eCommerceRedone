@@ -1,7 +1,9 @@
+// Importing Bootstrap CSS files for styling
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "./assets/styles/bootstrap.custom.css"
 import "./assets/styles/index.css"
 
+// Importing necessary components and libraries
 import {
   Route,
   RouterProvider,
@@ -9,6 +11,7 @@ import {
   createRoutesFromElements,
 } from "react-router-dom";
 
+// Importing various screens/components used in the application
 import App from './App';
 import CartScreen from './Screens/CartScreen';
 import HomeScreen from './Screens/HomeScreen';
@@ -26,36 +29,38 @@ import RegisterScreen from './Screens/RegisterScreen';
 import ShippingScreen from './Screens/ShippingScreen';
 import store from './store';
 
-const router=createBrowserRouter(
+// Creating a browser router using react-router-dom
+const router = createBrowserRouter(
   createRoutesFromElements(
+    // Defining routes for different pages/screens
     <Route path="/" element={<App/>}>
-      <Route index={true} path='/' element={<HomeScreen/>}/>
-      <Route path='/product/:id' element={<ProductScreen/>}/>
-      <Route path='/cart' element={<CartScreen/>}/>
-      <Route path='/login' element={<LoginScreen/>}/>
-      <Route path='/register' element={<RegisterScreen/>}/>
-      
-      {/*private Route*/}
-      <Route path='' element={<PrivateRoute/>}>
-      <Route path='/shipping' element={<ShippingScreen/>}/>
-      <Route path='/payment' element={<PaymentScreen/>}/>
-      <Route path='/placeorder' element={<PlaceOrderScreen/>}/>
-      <Route path='/order/:id' element={<OrderScreen/>}/>
+      <Route index={true} path='/' element={<HomeScreen/>}/>{/*  Route for the home screen*/} 
+      <Route path='/product/:id' element={<ProductScreen/>}/>{/*  Route for individual product screen*/} 
+      <Route path='/cart' element={<CartScreen/>}/> {/*Route for the shopping cart screen */} 
+      <Route path='/login' element={<LoginScreen/>}/>{/* Route for the login screen*/}
+      <Route path='/register' element={<RegisterScreen/>}/>{/*Route for the registration screen */}
+
+      {/* Private Routes */}
+      <Route path='' element={<PrivateRoute/>}> 
+        <Route path='/shipping' element={<ShippingScreen/>}/> {/* Private route for shipping details*/}
+        <Route path='/payment' element={<PaymentScreen/>}/> {/*Private route for payment details */}
+        <Route path='/placeorder' element={<PlaceOrderScreen/>}/> {/*  Private route for placing an order*/}
+        <Route path='/order/:id' element={<OrderScreen/>}/> {/*  Private route for viewing an order*/}
       </Route>
-     
     </Route>
   )
 )
+
+// Creating a root element for rendering the application
 const root = ReactDOM.createRoot(document.getElementById('root'));
+
+// Rendering the application components
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-<PayPalScriptProvider >
-<RouterProvider router={router} />
-</PayPalScriptProvider>
-   
+      <PayPalScriptProvider>
+        <RouterProvider router={router} />
+      </PayPalScriptProvider>
     </Provider>
-  
   </React.StrictMode>
 );
-

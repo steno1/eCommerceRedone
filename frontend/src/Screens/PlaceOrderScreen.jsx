@@ -106,25 +106,25 @@ const PlaceOrderScreen = () => {
               <ListGroupItem>
                 <Row> {/* Bootstrap component for row layout */}
                   <Col style={{ color: "black" }}>Items Price: </Col> {/* Styling for column */}
-                  <Col style={{ color: "black" }}>₦{cart.itemsPrice}</Col> {/* Displaying items price */}
+                  <Col style={{ color: "black" }}>${cart.itemsPrice}</Col> {/* Displaying items price */}
                 </Row>
               </ListGroupItem>
               <ListGroupItem>
                 <Row> {/* Bootstrap component for row layout */}
                   <Col style={{ color: "black" }}>Shipping: </Col> {/* Styling for column */}
-                  <Col style={{ color: "black" }}>₦{cart.shippingPrice}</Col> {/* Displaying shipping price */}
+                  <Col style={{ color: "black" }}>${cart.shippingPrice}</Col> {/* Displaying shipping price */}
                 </Row>
               </ListGroupItem>
               <ListGroupItem>
                 <Row> {/* Bootstrap component for row layout */}
                   <Col style={{ color: "black" }}>Tax: </Col> {/* Styling for column */}
-                  <Col style={{ color: "black" }}>₦{cart.taxPrice}</Col> {/* Displaying tax price */}
+                  <Col style={{ color: "black" }}>${cart.taxPrice}</Col> {/* Displaying tax price */}
                 </Row>
               </ListGroupItem>
               <ListGroupItem>
                 <Row> {/* Bootstrap component for row layout */}
                   <Col style={{ color: "black" }}>Total: </Col> {/* Styling for column */}
-                  <Col style={{ color: "black" }}>₦{cart.totalPrice}</Col> {/* Displaying total price */}
+                  <Col style={{ color: "black" }}>${cart.totalPrice}</Col> {/* Displaying total price */}
                 </Row>
               </ListGroupItem>
               <ListGroupItem>

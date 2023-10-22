@@ -32,7 +32,7 @@ const Product = ({product}) => {
         </Card.Title>
         </Link>
         <Card.Text as="h3">
-        ₦{product.price}
+        ${product.price}
         </Card.Text>
         <Card.Text as="div">
         <Rating value={product.rating} text={`${product.numReviews} Reviews`}

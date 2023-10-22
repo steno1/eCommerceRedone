@@ -90,7 +90,7 @@ const ProductScreen = () => {
                                   <ListGroup.Item>
                                       <Row>
                                           <Col>Price:</Col>
-                   <Col><strong> ₦{product.price}</strong></Col>
+                   <Col><strong> ${product.price}</strong></Col>
                                       </Row>
                                   </ListGroup.Item>
                                   {/* Display product availability status */}

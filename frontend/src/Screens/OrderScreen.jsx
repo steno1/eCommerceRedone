@@ -22,8 +22,10 @@ import { PayPalButtons } from "@paypal/react-paypal-js";
 import {toast}from "react-toastify";
 import { usePayPalScriptReducer } from "@paypal/react-paypal-js";
 import { useSelector } from "react-redux";
+import { useState } from "react";
 
 const OrderScreen = () => {
+    const [hovered, setHovered] = useState(false);
       // Extract the 'id' parameter from the URL
     const { id: orderId } = useParams();
 // Using the "useParams" hook to extract the 'id' parameter from the URL.
@@ -41,7 +43,8 @@ const OrderScreen = () => {
       // Using a custom hook for managing PayPal script loading and state.
   
       // Fetch PayPal client ID
-      const { data: paypal, isLoading: loadingPaypal, error: errorPayPal } = useGetPayPalClientIdQuery();
+      const { data: paypal, isLoading: loadingPaypal,
+         error: errorPayPal } = useGetPayPalClientIdQuery();
       /*
         Using the "useGetPayPalClientIdQuery" hook to fetch the PayPal client ID.
         It destructures the returned data into "data" (containing the PayPal client ID),
@@ -166,7 +169,7 @@ const OrderScreen = () => {
       }
       // Render an error message if there is an error
       else if (error) {
-          return <Message variant='danger'>{error}</Message>;
+          return <Message variant='danger'>{error.message}</Message>;
       }
       // Render the order details if data is available
       else {
@@ -252,25 +255,34 @@ const OrderScreen = () => {
                                           <Col><p>${order.taxPrice}</p></Col>
                                       </Row>
                                       <Row>
-                                          <Col>Total</Col>
-                                          <Col><p>${order.totalPrice}</p></Col>
+                          <Col>Total</Col>
+                        <Col><p>${order.totalPrice}</p></Col>
                                       </Row>
-                                      {!order.isPaid && (
-                                          <ListGroupItem>
-                                              {loadingPay && <Loader/>} 
-                                              {isPending?<Loader/>:(
-                                                  <div>
-                                                      <Button onClick={onApproveTest}
-                                                          style={{marginBottom:"10px"}}>
-                                                          Test pay order
-                                                      </Button>
-                                                      <div>
-                                                          <PayPalButtons createOrder={createOrder}
-                                                              onApprove={onApprove}
-                                                              onError={onError}
-                                                          ></PayPalButtons>
-                                                      </div>
-                                                  </div>
+                          {!order.isPaid && (
+                              <ListGroupItem>
+                            {loadingPay && <Loader/>} 
+                              {isPending?<Loader/>:(
+                                <div>
+                                    {/* 
+                                  <Button
+      onClick={onApproveTest}
+      style={{
+        marginBottom: "10px",
+        backgroundColor: hovered ? "#AE445A" : "#662549",
+      }}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+    >
+      Test pay order
+    </Button>
+*/}
+                 <div>
+            <PayPalButtons createOrder={createOrder}
+                   onApprove={onApprove}
+                       onError={onError}
+                                    ></PayPalButtons>
+                                         </div>
+                                         </div>
                                               )}    
                                           </ListGroupItem>
                                       )}

@@ -60,7 +60,7 @@ const CartScreen = () => {
                           </Link>
                           </Col>
                            <Col md={2}>
-                  ₦{item.price} 
+                  ${item.price} 
                           </Col>
                       <Col md={2}>
                      <Form>
@@ -94,7 +94,7 @@ const CartScreen = () => {
                             <ListGroupItem>
                            {/* Displaying subtotal */}
           <h2>Subtotal({cartItems.reduce((acc, curr) => acc + curr.qty, 0)})</h2> 
-          ₦{cartItems.reduce((acc, curr) => acc + curr.qty * curr.price, 0).toFixed(2)} 
+          ${cartItems.reduce((acc, curr) => acc + curr.qty * curr.price, 0).toFixed(2)} 
                           </ListGroupItem>
                             <ListGroupItem>
                         {/* Button to proceed to checkout */}

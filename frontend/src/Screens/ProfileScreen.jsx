@@ -2,6 +2,7 @@ import { Button, Col, Form, FormControl, FormGroup, FormLabel, Row, Table } from
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect, useState } from 'react'
 
+import {FaTimes} from "react-icons/fa"
 import { LinkContainer } from 'react-router-bootstrap'
 import Loader from '../Components/Loader'
 import Message from '../Components/Message'
@@ -121,7 +122,19 @@ Update
 <td>{order._id}</td>
 <td>{order.createdAt.substring(0, 10)}</td>
 <td>${order.totalPrice}</td>
+<td>{order.isPaid?(
+    order.paidAt.substring(0, 10)
+):(<FaTimes style={{color:"red"}}/>)}</td>
 
+<td>{order.isDelivered?(
+    order.deliveredAt.substring(0, 10)
+):(<FaTimes style={{color:"red"}}/>)}</td>
+<td>
+    <LinkContainer to={`/order/${order._id}`}>
+    <Button className='btn-sm' variant='light'>Details</Button>
+    </LinkContainer>
+  
+</td>
     </tr>
 ))}
         </tbody>

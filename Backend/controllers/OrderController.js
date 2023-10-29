@@ -92,7 +92,8 @@ const updateOrderToDelivered = asyncHandler(async (req, res) => {
 
 // Placeholder function to get all orders
 const getAllOrders = asyncHandler(async (req, res) => {
-  res.send("Get all orders");
+  const orders=await Order.find({}).populate("user", "id name");
+  res.status(200).json(orders)
 });
 
 // Exporting all functions as an object

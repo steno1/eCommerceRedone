@@ -11,11 +11,13 @@ import {
   createRoutesFromElements,
 } from "react-router-dom";
 
+import AdminRoute from './Components/AdminRoutes';
 // Importing various screens/components used in the application
 import App from './App';
 import CartScreen from './Screens/CartScreen';
 import HomeScreen from './Screens/HomeScreen';
 import LoginScreen from './Screens/LoginScreen';
+import OrderListScreen from './Screens/admin/OrderListScreen';
 import OrderScreen from './Screens/OrderScreen';
 import { PayPalScriptProvider }from "@paypal/react-paypal-js";
 import PaymentScreen from './Screens/PaymentScreen';
@@ -48,6 +50,13 @@ const router = createBrowserRouter(
         <Route path='/placeorder' element={<PlaceOrderScreen/>}/> {/*  Private route for placing an order*/}
         <Route path='/order/:id' element={<OrderScreen/>}/> {/*  Private route for viewing an order*/}
         <Route path='/profile' element={<ProfileScreen/>}/>
+      </Route>
+
+
+        {/* Admin Routes */}
+        <Route path='' element={<AdminRoute/>}> 
+
+        <Route path='/admin/orderlist' element={<OrderListScreen/>}/>
       </Route>
     </Route>
   )

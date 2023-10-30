@@ -1,6 +1,7 @@
 // Import necessary constants and modules.
 
-import { PRODUCTS_URL } from '../constant'; // Import the PRODUCTS_URL constant from the 'constant' module.
+import { PRODUCTS_URL, UPLOAD_URL } from '../constant'; // Import the PRODUCTS_URL constant from the 'constant' module.
+
 import { apiSlice } from './apiSlices'; // Import the 'apiSlice' module from 'apiSlices'.
 
 // Define the 'productApiSlice' constant using the result of 'apiSlice.injectEndpoints()'.
@@ -21,6 +22,7 @@ export const productApiSlice = apiSlice.injectEndpoints({
       providesTags:["Product"],
        // Keep unused data for 60 seconds for potential caching.
        keepUnusedDataFor: 5,
+       
        
     }),
 
@@ -52,6 +54,13 @@ export const productApiSlice = apiSlice.injectEndpoints({
         body:data
       }),
       invalidatesTags: ['Product'],
+    }),
+    uploadProductImage:builder.mutation({
+      query:(data)=>({
+        url:UPLOAD_URL,
+        method:"POST",
+        body:data
+      })
     })
   }),
 });
@@ -61,5 +70,6 @@ export const {
   useGetProductsQuery, // Function for querying product data.
   useGetSingleProductQuery, // Function for querying a single product data.
   useCreateProductMutation, // Function for mutating (creating) a product.
-useUpdateProductMutation
+useUpdateProductMutation,
+useUploadProductImageMutation
 } = productApiSlice;

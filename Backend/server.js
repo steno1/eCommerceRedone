@@ -1,5 +1,3 @@
-// Importing the ProductRoutes module from the specified file path
-
 import ProductRoutes from "./Routes/ProductRoutes.js";
 import UserRoutes from "./Routes/UserRoutes.js";
 import connectDB from "../config/db.js";
@@ -9,6 +7,8 @@ import errorHandler from "./middleware/errormiddleware.js";
 import express from "express";
 import notFound from "./middleware/notfounderror.js";
 import orderRoutes from "./Routes/OrderRoutes.js";
+import path from "path"
+import uploadRoutes from "./Routes/uploadRoutes.js";
 
 // Loading environment variables from a .env file into process.env
 dotenv.config();
@@ -25,14 +25,13 @@ const app=express();
 // Middleware for parsing JSON request bodies
 app.use(express.json())
 
-// Middleware for parsing JSON request bodies (repeated, possibly redundant)
-app.use(express.json())
-
 // Middleware for parsing URL-encoded request bodies with extended options
 app.use(express.urlencoded({extended:true}))
 
 // Middleware for parsing cookies in the request
 app.use(cookieParser());
+
+app.use('/api/upload', uploadRoutes)  // Use the uploadRoutes for handling file uploads
 
 // Handling GET request to the root route and sending a response
 app.get("/", (req, res)=>{
@@ -50,8 +49,10 @@ app.use("/api/orders", orderRoutes)
 
 // Handling GET request to "/api/config/paypal" and sending a response with a JSON object
 app.get('/api/config/paypal', (req, res)=>
-res.send({client:process.env.PAYPAL_CLIENT_ID}))
+res.send({client:process.env.PAYPAL_CLIENT_ID}));
 
+const __dirname=path.resolve();
+app.use('/uploads', express.static(path.join(__dirname, "/uploads")))// Serve uploaded files
 // Using the notFound middleware for handling 404 errors
 app.use(notFound);
 

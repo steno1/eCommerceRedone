@@ -1,7 +1,7 @@
 import { Button, Form, FormControl, FormGroup, FormLabel } from 'react-bootstrap'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
-import { useGetSingleProductQuery, useUpdateProductMutation } from '../../slices/productApiSlice'
+import { useGetSingleProductQuery, useUpdateProductMutation, useUploadProductImageMutation } from '../../slices/productApiSlice'
 
 import FormContainer from '../../Components/formContainer'
 import Loader from '../../Components/Loader'
@@ -10,8 +10,11 @@ import React from 'react'
 import { toast } from 'react-toastify'
 
 const ProductEditScreen = () => {
-    const { id: productId } = useParams(); // Extract 'id' from URL parameters
-    const [name, setName] = useState(""); // Initialize state variables
+    // Extract 'id' from URL parameters
+    const { id: productId } = useParams();
+
+    // Initialize state variables for various product details
+    const [name, setName] = useState("");
     const [price, setPrice] = useState("");
     const [image, setImage] = useState("");
     const [brand, setBrand] = useState("");
@@ -19,12 +22,20 @@ const ProductEditScreen = () => {
     const [countInStock, setCountInStock] = useState("");
     const [description, setDescription] = useState("");
 
-    const { data: product, isLoading, error } = useGetSingleProductQuery(productId); // Fetch product data using a query
+    // Fetch product data using a query
+    const { data: product, isLoading, error } = useGetSingleProductQuery(productId);
 
-    const [updateProduct, { isLoading: LoadingUpdate }] = useUpdateProductMutation(); // Define a mutation for updating the product
-    const navigate = useNavigate(); // Initialize a navigation function
+    // Define a mutation function for updating the product
+    const [updateProduct, { isLoading: LoadingUpdate }] = useUpdateProductMutation();
 
-    useEffect(() => { // Use an effect to populate form fields when product data is available
+    // Initialize a navigation function for redirecting to other routes
+    const navigate = useNavigate();
+
+    // Define a mutation function for uploading product images
+    const [uploadProductImage, { isLoading: loadingUpload }] = useUploadProductImageMutation();
+
+    // Use an effect to populate form fields when product data is available
+    useEffect(() => {
         if (product) {
             setName(product.name);
             setPrice(product.price);
@@ -36,9 +47,11 @@ const ProductEditScreen = () => {
         }
     }, [product]);
 
-    const submitHandler = async (e) => { // Define a form submission handler
+    // Define a form submission handler
+    const submitHandler = async (e) => {
         e.preventDefault();
-        const updatedProduct = { // Create an object with updated product data
+        // Create an object with updated product data
+        const updatedProduct = {
             productId,
             name,
             price,
@@ -48,85 +61,145 @@ const ProductEditScreen = () => {
             countInStock,
             description
         };
-        const result = await updateProduct(updatedProduct); // Send a mutation to update the product
-        if (result.error) { // Handle potential errors
+        // Send a mutation to update the product
+        const result = await updateProduct(updatedProduct);
+        // Handle potential errors or display a success message
+        if (result.error) {
             toast.error(result.error);
         } else {
             toast.success('Product Updated');
-            navigate("/admin/productlist"); // Navigate to a different route
+            // Navigate to a different route
+            navigate("/admin/productlist");
         }
     }
 
-    return ( // Render the component's JSX
+    // Define a function to handle file uploads for the product image
+    const uploadFileHandler = async (e) => {
+        const formData = new FormData();
+        formData.append("image", e.target.files[0]);
+        try {
+            // Call the uploadProductImage mutation and await the response
+            const res = await uploadProductImage(formData).unwrap();
+            // Display a success message using the toast library
+            toast.success(res.message);
+            // Update the image state with the new image URL
+            setImage(res.image);
+        } catch (error) {
+            // Display an error message using the toast library
+            toast.error(error?.data?.message || error.error);
+        }
+    }
+
+    return (
         <>
-        <Link to='/admin/productlist' className='btn btn-light my-3'> {/* Create a link back to the product list */}
-        Go Back
-        </Link>
-        <FormContainer> {/* Render a container for the form */}
-        <h1>Edit Product</h1>
-        {LoadingUpdate && <Loader />} {/* Display a loading spinner during the update */}
-        {isLoading ? (<Loader />) : error ? ( // Handle loading and error states
-            <Message variant='danger'>{error.message}</Message>
-        ) : (
-            <Form onSubmit={submitHandler}> {/* Create a form for updating the product */}
-            <FormGroup controlId='name' style={{ margin: "10px" }}>
-            <FormLabel>Name</FormLabel>
-            <FormControl type='text' placeholder='Enter name' // Render an input field for the product name
-            value={name} style={{ color: "black" }}
-            onChange={(e) => setName(e.target.value)}>
-            </FormControl>
-            </FormGroup>
-
-            <FormGroup controlId='price' style={{ margin: "10px" }}>
-            <FormLabel>Price</FormLabel>
-            <FormControl type='number' placeholder='Price' // Render an input field for the product price
-            value={price} style={{ color: "black" }}
-            onChange={(e) => setPrice(e.target.value)}>
-            </FormControl>
-            </FormGroup>
-
-            <FormGroup controlId='brand' style={{ margin: "10px" }}>
-            <FormLabel>Brand</FormLabel>
-            <FormControl type='text' placeholder='Enter Brand' // Render an input field for the product brand
-            value={brand} style={{ color: "black" }}
-            onChange={(e) => setBrand(e.target.value)}>
-            </FormControl>
-            </FormGroup>
-
-            <FormGroup controlId='category' style={{ margin: "10px" }}>
-            <FormLabel>Category</FormLabel>
-            <FormControl type='text' placeholder='Enter category' // Render an input field for the product category
-            value={category} style={{ color: "black" }}
-            onChange={(e) => setCategory(e.target.value)}>
-            </FormControl>
-            </FormGroup>
-
-            <FormGroup controlId='countInStock' style={{ margin: "10px" }}>
-            <FormLabel>Counts in Stock (Products in Stock)</FormLabel>
-            <FormControl type='number' placeholder='products in stock' // Render an input field for the product count in stock
-            value={countInStock} style={{ color: "black" }}
-            onChange={(e) => setCountInStock(e.target.value)}>
-            </FormControl>
-            </FormGroup>
-
-            <FormGroup controlId='description' style={{ margin: "10px" }}> {/* Render a text area for the product description */}
-            <FormLabel>Description</FormLabel>
-            <textarea
-                rows="5"
-                placeholder="Product description"
-                value={description}
-                style={{ color: "black", width: "100%" }}
-                onChange={(e) => setDescription(e.target.value)}>
-            </textarea>
-            </FormGroup>
-            <Button type="submit" variant='primary' style={{ margin: "10px" }}> {/* Render a button to submit the form */}
-            Update
-            </Button>
-            </Form>
-        )}
-        </FormContainer>
+            {/* Create a link back to the product list */}
+            <Link to='/admin/productlist' className='btn btn-light my-3'>
+                Go Back
+            </Link>
+            {/* Render a container for the form */}
+            <FormContainer>
+                <h1>Edit Product</h1>
+                {/* Display a loading spinner during the update */}
+                {LoadingUpdate && <Loader />}
+                {isLoading ? (
+                    <Loader />
+                ) : error ? (
+                    // Handle loading and error states
+                    <Message variant='danger'>{error.message}</Message>
+                ) : (
+                    <Form onSubmit={submitHandler}>
+                        {/* Render input fields and form controls for updating product details */}
+                        <FormGroup controlId='name' style={{ margin: "10px" }}>
+                            <FormLabel>Name</FormLabel>
+                            <FormControl
+                                type='text'
+                                placeholder='Enter name'
+                                value={name}
+                                style={{ color: "black" }}
+                                onChange={(e) => setName(e.target.value)}
+                            >
+                            </FormControl>
+                        </FormGroup>
+                        <FormGroup controlId='price' style={{ margin: "10px" }}>
+                            <FormLabel>Price</FormLabel>
+                            <FormControl
+                                type='number'
+                                placeholder='Price'
+                                value={price}
+                                style={{ color: "black" }}
+                                onChange={(e) => setPrice(e.target.value)}
+                            >
+                            </FormControl>
+                        </FormGroup>
+                        <FormGroup controlId='image' style={{ margin: "10px" }}>
+                            <FormLabel>Image</FormLabel>
+                            <FormControl
+                                type='text'
+                                placeholder='Image url'
+                                value={image}
+                                onChange={(e) => setImage(e.target.value)}
+                            >
+                            </FormControl>
+                            <FormControl
+                                type='file'
+                                label="Choose File"
+                                onChange={uploadFileHandler}
+                            >
+                            </FormControl>
+                        </FormGroup>
+                        <FormGroup controlId='brand' style={{ margin: "10px" }}>
+                            <FormLabel>Brand</FormLabel>
+                            <FormControl
+                                type='text'
+                                placeholder='Enter Brand'
+                                value={brand}
+                                style={{ color: "black" }}
+                                onChange={(e) => setBrand(e.target.value)}
+                            >
+                            </FormControl>
+                        </FormGroup>
+                        <FormGroup controlId='category' style={{ margin: "10px" }}>
+                            <FormLabel>Category</FormLabel>
+                            <FormControl
+                                type='text'
+                                placeholder='Enter category'
+                                value={category}
+                                style={{ color: "black" }}
+                                onChange={(e) => setCategory(e.target.value)}
+                            >
+                            </FormControl>
+                        </FormGroup>
+                        <FormGroup controlId='countInStock' style={{ margin: "10px" }}>
+                            <FormLabel>Counts in Stock (Products in Stock)</FormLabel>
+                            <FormControl
+                                type='number'
+                                placeholder='products in stock'
+                                value={countInStock}
+                                style={{ color: "black" }}
+                                onChange={(e) => setCountInStock(e.target.value)}
+                            >
+                            </FormControl>
+                        </FormGroup>
+                        <FormGroup controlId='description' style={{ margin: "10px" }}>
+                            <FormLabel>Description</FormLabel>
+                            <textarea
+                                rows="5"
+                                placeholder="Product description"
+                                value={description}
+                                style={{ color: "black", width: "100%" }}
+                                onChange={(e) => setDescription(e.target.value)}
+                            >
+                            </textarea>
+                        </FormGroup>
+                        <Button type="submit" variant='primary' style={{ margin: "10px" }}>
+                            Update
+                        </Button>
+                        {loadingUpload && <Loader />}
+                    </Form>
+                )}
+            </FormContainer>
         </>
-    )
+    );
 }
 
-export default ProductEditScreen // Export the component
+export default ProductEditScreen;

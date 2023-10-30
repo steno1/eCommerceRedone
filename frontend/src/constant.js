@@ -16,3 +16,5 @@ export const PAYPAL_UrL="/api/config/paypal"
 
 // This constant represents the URL for accessing product-related data again. It has the same value as the PRODUCT_URL constant above ("/api/products").
 export const PRODUCTS_URL="/api/products"
+
+export const UPLOAD_URL="/api/upload"

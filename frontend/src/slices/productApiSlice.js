@@ -1,35 +1,65 @@
-import { PRODUCTS_URL } from '../constant';
-import { apiSlice } from './apiSlices';
+// Import necessary constants and modules.
 
-// This line defines a constant `productApiSlice` and assigns it the result of calling `apiSlice.injectEndpoints()`.
+import { PRODUCTS_URL } from '../constant'; // Import the PRODUCTS_URL constant from the 'constant' module.
+import { apiSlice } from './apiSlices'; // Import the 'apiSlice' module from 'apiSlices'.
+
+// Define the 'productApiSlice' constant using the result of 'apiSlice.injectEndpoints()'.
 export const productApiSlice = apiSlice.injectEndpoints({
-    // global configuration for the api
-    refetchOnReconnect: true,
+  // Global configuration for the API
+  refetchOnReconnect: true, // Specifies that data should be refetched when the network connection is reestablished.
 
-  // This object contains a property named `endpoints`, which is a function that takes a `builder` as a parameter.
+  // Define API endpoints using the 'endpoints' function.
   endpoints: (builder) => ({
-
-    // This is defining an endpoint named `getProducts`.
+    // Define an endpoint named 'getProducts'.
     getProducts: builder.query({
-
-      // This function defines the behavior of the query.
+      // Define the behavior of the query.
       query: () => ({
-
-        // This specifies the URL to fetch data from. It uses the `PRODUCTS_URL` constant imported earlier.
+        // Specify the URL to fetch data from using the 'PRODUCTS_URL' constant.
         url: PRODUCTS_URL,
-
-        // This option specifies that unused data should be kept for 60 seconds, likely for caching purposes.
-        keepUnusedDataFor: 60
-      })
+       
+      }),
+      providesTags:["Product"],
+       // Keep unused data for 60 seconds for potential caching.
+       keepUnusedDataFor: 5,
+       
     }),
-    getSingleProduct:builder.query({
-      query:(productId)=>({
-        url:`${PRODUCTS_URL}/${productId}`,
-        keepUnusedDataFor:5
-      })
+
+    // Define an endpoint named 'getSingleProduct'.
+    getSingleProduct: builder.query({
+      query: (productId) => ({
+        // Specify the URL with the 'productId' parameter appended to 'PRODUCTS_URL'.
+        url: `${PRODUCTS_URL}/${productId}`,
+       
+      }),
+       // Keep unused data for 5 seconds.
+       keepUnusedDataFor: 5,
+    }),
+
+    // Define an endpoint named 'createProduct'.
+    createProduct: builder.mutation({
+      query: () => ({
+        // Specify the URL for creating a product.
+        url: PRODUCTS_URL,
+        method: "POST", // Use the HTTP POST method for creating a product.
+      }),
+      // Invalidate data with the 'Product' tag when creating a product.
+      invalidatesTags: ['Product'],
+    }),
+    updateProduct:builder.mutation({
+      query: (data)=>({
+        url:`${PRODUCTS_URL}/${data.productId}`,
+        method:"PUT",
+        body:data
+      }),
+      invalidatesTags: ['Product'],
     })
   }),
 });
 
-// This line exports an object with a property named `useGetProductsQuery`.
-export const { useGetProductsQuery, useGetSingleProductQuery } = productApiSlice;
+// Export objects and functions for accessing the API.
+export const {
+  useGetProductsQuery, // Function for querying product data.
+  useGetSingleProductQuery, // Function for querying a single product data.
+  useCreateProductMutation, // Function for mutating (creating) a product.
+useUpdateProductMutation
+} = productApiSlice;

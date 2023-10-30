@@ -135,7 +135,7 @@ const [logoutApiCall]=useLogoutApiCallMutation();
               )}
 {userInfo && userInfo.isAdmin && (
   <NavDropdown title='Admin' id="adminmenu">
-     <LinkContainer to='/admin/profuctlist' >
+     <LinkContainer to='/admin/productlist' >
 <NavDropdown.Item>Products</NavDropdown.Item>
   
     </LinkContainer>

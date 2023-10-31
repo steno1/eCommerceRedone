@@ -32,6 +32,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import RegisterScreen from './Screens/RegisterScreen';
 import ShippingScreen from './Screens/ShippingScreen';
+import UserListScreen from './Screens/admin/UserListScreen';
 import store from './store';
 
 // Creating a browser router using react-router-dom
@@ -61,7 +62,7 @@ const router = createBrowserRouter(
         <Route path='/admin/orderlist' element={<OrderListScreen/>}/>
         <Route path='/admin/productlist' element={<ProductListScreen/>}/>
         <Route path='/admin/product/:id/edit' element={<ProductEditScreen/>}/>
-      
+        <Route path='/admin/userlist' element={<UserListScreen/>}/>
       </Route>
     </Route>
   )

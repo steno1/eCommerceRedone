@@ -1,7 +1,11 @@
 import { Button, Form, FormControl, FormGroup, FormLabel } from 'react-bootstrap'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
-import { useGetSingleProductQuery, useUpdateProductMutation, useUploadProductImageMutation } from '../../slices/productApiSlice'
+import {
+    useGetSingleProductQuery,
+    useUpdateProductMutation,
+    useUploadProductImageMutation
+} from '../../slices/productApiSlice'
 
 import FormContainer from '../../Components/formContainer'
 import Loader from '../../Components/Loader'

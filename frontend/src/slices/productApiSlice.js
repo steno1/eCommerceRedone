@@ -61,6 +61,13 @@ export const productApiSlice = apiSlice.injectEndpoints({
         method:"POST",
         body:data
       })
+    }),
+    deleteProduct:builder.mutation({
+      query:(productId)=>({
+        url:`${PRODUCTS_URL}/${productId}`,
+        method:"DELETE",
+      
+      })
     })
   }),
 });
@@ -71,5 +78,6 @@ export const {
   useGetSingleProductQuery, // Function for querying a single product data.
   useCreateProductMutation, // Function for mutating (creating) a product.
 useUpdateProductMutation,
-useUploadProductImageMutation
+useUploadProductImageMutation,
+useDeleteProductMutation
 } = productApiSlice;

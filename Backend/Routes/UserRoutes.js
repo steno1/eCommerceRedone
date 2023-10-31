@@ -33,6 +33,7 @@ router.route("/:id").get(admin, protect, getSingleUser)
 .delete(protect, admin, deleteUsers)
 .put(protect, admin, updateUsers)
 
+
 export default router;
 
 

@@ -2,13 +2,13 @@
 
 import { Button, Col, Row, Table } from 'react-bootstrap'; // Import components from the 'react-bootstrap' library
 import { FaEdit, FaTrash } from 'react-icons/fa'; // Import the 'FaTimes' icon from 'react-icons'
+import { useCreateProductMutation, useDeleteProductMutation } from '../../slices/productApiSlice'; // Import the 'useCreateProductMutation' function from the 'productApiSlice'
 
 import { LinkContainer } from 'react-router-bootstrap'; // Import the 'LinkContainer' component from 'react-router-bootstrap'
 import Loader from '../../Components/Loader'; // Import the 'Loader' component from a relative path
 import Message from '../../Components/Message'; // Import the 'Message' component from a relative path
 import React from 'react'; // Import the 'React' object from the 'react' library
 import { toast } from "react-toastify"; // Import the 'toast' function from 'react-toastify'
-import { useCreateProductMutation } from '../../slices/productApiSlice'; // Import the 'useCreateProductMutation' function from the 'productApiSlice'
 import { useGetProductsQuery } from '../../slices/productApiSlice'; // Import the 'useGetProductsQuery' function from the 'productApiSlice'
 
 // Define a React functional component named 'ProductListScreen'.
@@ -19,10 +19,20 @@ const ProductListScreen = () => {
     // Use the 'useCreateProductMutation' hook to create a new product.
     const [createProduct, { isLoading: loadingCreate }] = useCreateProductMutation();
 
-    // Define a function to handle the deletion of a product.
-    const deleteHandler = (id) => {
-        console.log("delete item");
+    const [deleteProduct, {isLoading:loadingDelete}]=useDeleteProductMutation();
+
+   // Handler for deleting a product
+   const deleteHandler = async(id) => {
+    if(window.confirm("Are sure you want to delete the product?")){
+try {
+  await deleteProduct(id);
+  toast.success("Product deleted")
+  refetch();
+} catch (err) {
+  toast.error(err?.data?.message || err.error)
+}
     }
+  }
 
     // Define a function to handle the creation of a new product.
     const createProductHandler = async () => {
@@ -55,7 +65,8 @@ const ProductListScreen = () => {
             </Row>
             
             {/* Display a loader if a new product is being created. */}
-            {loadingCreate && (<Loader/>)}
+            {loadingCreate && (<Loader />)}
+            {loadingDelete && (<Loader/>)}
 
             {/* Conditional rendering based on loading and error states. */}
             {isLoading ? (<Loader/>) : error ? <Message>{error.message}</Message> : (
@@ -87,7 +98,12 @@ const ProductListScreen = () => {
                      <FaEdit />
                       </Button>
                    </LinkContainer>
-       <Button variant="danger" className='btn-sm' style={{ color: "white" }} onClick={() => deleteHandler(product._id)}>
+       <Button variant="danger" className='btn-sm'
+        style={{ color: "white" }} 
+        onClick={() => deleteHandler(product._id)}
+
+
+        >
                                    <FaTrash />
                                         </Button>
                                     </td>

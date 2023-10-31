@@ -91,7 +91,34 @@ const {name, price,description, image, brand,
         res.status(404);
         throw new Error("Resource not found")
      }
-})
+});
+
+
+// Define a controller function named deleteProduct which handles deletion of a product
+const deleteProduct = asyncHandler(async (req, res) => {
+    // Find the product in the database based on the provided ID
+    const product = await Product.findById(req.params.id);
+
+    // Check if a product with the provided ID was found
+    if (product) {
+        // If product is found, proceed with deletion
+        await Product.deleteOne({
+            _id: product._id // Delete the product with matching ID
+        });
+        
+        // Send a JSON response with a 200 status code to indicate success
+        res.status(200).json({
+            message: "Product deleted" // Provide a success message
+        });      
+    } else {
+        // If the product is not found, set a 404 status
+        res.status(404);
+
+        // Throw an error to be caught by the error handling middleware
+        throw new Error("Product not found");  
+    }
+});
 
 // Exporting the handler functions to be used in the Express routes
-export { getProducts, getSingleProduct, createProduct, updateProduct };
+export { getProducts, getSingleProduct,
+     createProduct, updateProduct, deleteProduct };

@@ -2,29 +2,36 @@
 
 import { Button, Col, Row, Table } from 'react-bootstrap'; // Import components from the 'react-bootstrap' library
 import { FaCheck, FaEdit, FaTimes, FaTrash } from 'react-icons/fa'; // Import the 'FaTimes' icon from 'react-icons'
+import { useDeleteUserMutation, useGetUsersQuery } from '../../slices/userApiSlice';
 
 import { LinkContainer } from 'react-router-bootstrap'; // Import the 'LinkContainer' component from 'react-router-bootstrap'
 import Loader from '../../Components/Loader'; // Import the 'Loader' component from a relative path
 import Message from '../../Components/Message'; // Import the 'Message' component from a relative path
 import React from 'react'; // Import the 'React' object from the 'react' library
 import { toast } from "react-toastify"; // Import the 'toast' function from 'react-toastify'
-import { useGetUsersQuery } from '../../slices/userApiSlice';
 
 const UserListScreen = () => {
    
     const { data: users, isLoading, error, refetch } = useGetUsersQuery();
-console.log(users)
+    const [deleteUser, {isLoading:loadingDelete}]=useDeleteUserMutation()
 
    // Handler for deleting a user
    const deleteHandler = async(id) => {
-   console.log("delete user")
+   if(window.confirm("Are you sure you want to delete this user?")){
+    try {
+        await deleteUser(id);
+        toast.success("User successfully deleted")
+        refetch();
+    } catch (error) {
+        toast.error(error?.data?.message || error.error)
+    }
+   }
   }
-
     // Render the component's JSX.
     return (
         <>
         <h1>Users</h1>
-
+            { loadingDelete && <Loader/>}
      {/* Conditional rendering based on loading and error states. */}
             {isLoading ? (
             <Loader/>

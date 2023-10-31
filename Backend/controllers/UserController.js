@@ -164,7 +164,7 @@ res.status(200).json({
 //access private admin
 // Route handler for getting a single user by ID
 const getSingleUser = asyncHandler(async (req, res) => {
-    const user=await User.findById(req.params.id).select(-password);
+    const user=await User.findById(req.params.id).select("-password");
     if(user){
         res.status(200).json(user)
     }else{

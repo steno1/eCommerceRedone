@@ -29,10 +29,9 @@ router.route("/profile").get(protect, getUserProfile)
 .put(protect, updateUserProfile)
 
 //Admin
-router.route("/:id").get(admin, protect, getSingleUser)
+router.route("/:id").get( protect, admin, getSingleUser)
 .delete(protect, admin, deleteUsers)
 .put(protect, admin, updateUsers)
-
 
 export default router;
 

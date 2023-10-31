@@ -72,6 +72,65 @@ const getSingleProduct = asyncHandler(async (req, res) => {
     res.sendStatus(404);
 });
 
+// Define a controller function named createProductReview that handles adding a review for a product
+const createProductReview = asyncHandler(async (req, res) => {
+    // Destructure the 'rating' and 'comment' from the request body
+    const { rating, comment } = req.body;
+    
+    // Find the product based on the provided ID in the request parameters
+    const product = await Product.findById(req.params.id);
+
+    // Check if the product exists
+    if (product) {
+        // Check if the user has already reviewed the product
+        const alreadyReviewed = product.reviews.find(
+      (review) => review.user.toString() === req.user._id.toString()
+        );
+
+        // If the user has already reviewed the product, return an error response
+        if (alreadyReviewed) {
+            res.status(400);
+            throw new Error("Product already reviewed");
+        }
+
+        // Create a 'review' object with user's name, rating, comment, and user ID
+        const review = {
+            name: req.user.name,    // User's name from the request object
+            rating: Number(rating), // Convert 'rating' to a number from the request body
+            comment,                // Comment from the request body
+            user: req.user._id      // User's ID from the request object
+        };
+
+        // Add the 'review' object to the 'reviews' array of the 'product'
+        product.reviews.push(review);
+
+        // Update the 'numReviews' property of the 'product' to the new number of reviews
+        product.numReviews = product.reviews.length;
+
+        // Calculate and update the 'rating' property of the 'product' based on the new review
+        product.rating = product.reviews.reduce(
+            (acc, curr) => acc + curr.rating,
+            0
+        ) / product.reviews.length;
+
+        // Save the updated 'product' to the database
+        await product.save();
+
+        // Send a JSON response with a status code of 201 (Created) and a success message
+        res.status(201).json({
+            message: "Review added"
+        });
+    } else {
+        // If the product is not found, set the response status to 404 (Not Found)
+        res.status(404);
+
+        // Throw an error to be caught by the error handling middleware
+        throw new Error("Resource not found");
+    }
+});
+
+
+
 const updateProduct=asyncHandler(async(req, res)=>{
 const {name, price,description, image, brand,
      category, countInStock}=req.body;
@@ -121,4 +180,4 @@ const deleteProduct = asyncHandler(async (req, res) => {
 
 // Exporting the handler functions to be used in the Express routes
 export { getProducts, getSingleProduct,
-     createProduct, updateProduct, deleteProduct };
+     createProduct, updateProduct, deleteProduct, createProductReview };

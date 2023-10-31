@@ -32,6 +32,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import RegisterScreen from './Screens/RegisterScreen';
 import ShippingScreen from './Screens/ShippingScreen';
+import UserEditScreen from './Screens/admin/UserEditScreen';
 import UserListScreen from './Screens/admin/UserListScreen';
 import store from './store';
 
@@ -63,6 +64,7 @@ const router = createBrowserRouter(
         <Route path='/admin/productlist' element={<ProductListScreen/>}/>
         <Route path='/admin/product/:id/edit' element={<ProductEditScreen/>}/>
         <Route path='/admin/userlist' element={<UserListScreen/>}/>
+        <Route path='/admin/user/:id/edit' element={<UserEditScreen/>}/>
       </Route>
     </Route>
   )

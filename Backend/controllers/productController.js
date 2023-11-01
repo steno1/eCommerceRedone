@@ -49,12 +49,21 @@ const product = new Product({
 
 // Handler function for fetching all products
 const getProducts = asyncHandler(async (req, res) => {
+const pageSize=6;
+const  page=Number(req.query.pageNumber) || 1;
+const count=await Product.countDocuments();
+
     // Using asyncHandler to handle asynchronous operations in the route handler
     // Fetching all products from the database
-    const products = await Product.find({});
+    const products = await Product.find({})
+    .limit(pageSize)
+    .skip(pageSize * (page-1))
 
-    // Sending a JSON response with the array of products
-    return res.json(products);
+    return res.json({
+        products,
+        page,
+        pages:Math.ceil(count/pageSize)
+    });
 });
 
 // Handler function for getting a single product by its ID

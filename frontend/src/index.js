@@ -41,7 +41,9 @@ const router = createBrowserRouter(
   createRoutesFromElements(
     // Defining routes for different pages/screens
     <Route path="/" element={<App/>}>
-      <Route index={true} path='/' element={<HomeScreen/>}/>{/*  Route for the home screen*/} 
+      <Route index={true} path='/' element={<HomeScreen/>}/>{/*  Route for the home screen*/}
+      <Route path='/page/:pageNumber' element={<HomeScreen/>}/>
+
       <Route path='/product/:id' element={<ProductScreen/>}/>{/*  Route for individual product screen*/} 
       <Route path='/cart' element={<CartScreen/>}/> {/*Route for the shopping cart screen */} 
       <Route path='/login' element={<LoginScreen/>}/>{/* Route for the login screen*/}

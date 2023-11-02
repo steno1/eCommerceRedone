@@ -49,7 +49,7 @@ const product = new Product({
 // Handler function for fetching all products
 const getProducts = asyncHandler(async (req, res) => {
     // Set the number of products to display per page
-    const pageSize = 6;
+    const pageSize = process.env.PAGINATION_LIMIT;
   
     // Determine the current page number from the request query parameters
     const page = Number(req.query.pageNumber) || 1;

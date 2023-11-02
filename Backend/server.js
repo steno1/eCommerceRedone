@@ -35,7 +35,7 @@ app.use('/api/upload', uploadRoutes)  // Use the uploadRoutes for handling file 
 
 // Handling GET request to the root route and sending a response
 app.get("/", (req, res)=>{
-    res.send("Api is running")
+    res.send("Api is running here")
 })
 
 // Using the ProductRoutes module for requests starting with "/api/products"
@@ -53,6 +53,21 @@ res.send({client:process.env.PAYPAL_CLIENT_ID}));
 
 const __dirname=path.resolve();
 app.use('/uploads', express.static(path.join(__dirname, "/uploads")))// Serve uploaded files
+
+if(process.env.NODE_ENV==="production"){
+    // Serve static files from '/frontend/build' in production
+    app.use(express.static(path.join(__dirname, "/frontend/build")))
+
+    app.get("*", (req, res) => res.sendFile(path.resolve(__dirname, "frontend", "build", "index.html")));
+// This line serves the 'index.html' file located in the 'frontend/build' directory.
+
+} else {
+    // For all other routes, respond with "Api is running..."
+    app.get("/", (req, res)=>{
+        res.send("Api is running...")
+    })   
+}
+
 // Using the notFound middleware for handling 404 errors
 app.use(notFound);
 

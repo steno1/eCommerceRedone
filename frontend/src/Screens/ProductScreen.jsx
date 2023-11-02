@@ -16,6 +16,7 @@ import { Link } from 'react-router-dom';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Loader from '../Components/Loader';
 import Message from '../Components/Message';
+import Meta from '../Components/Meta';
 import Rating from '../Components/Rating';
 import Row from 'react-bootstrap/Row';
 import { addToCart } from '../slices/cartSlice';
@@ -87,6 +88,7 @@ try {
                   </Message>
               ) : (
                 <>
+                <Meta title={product.name}/>
                   {/*Render product details */} 
                   <Row>
                       <Col md={5}>

@@ -1,6 +1,6 @@
 // Import necessary components and libraries from various sources
 
-import { Button, Col, Row, Table } from 'react-bootstrap'; // Import components from the 'react-bootstrap' library
+import { Button, Table } from 'react-bootstrap'; // Import components from the 'react-bootstrap' library
 import { FaCheck, FaEdit, FaTimes, FaTrash } from 'react-icons/fa'; // Import the 'FaTimes' icon from 'react-icons'
 import { useDeleteUserMutation, useGetUsersQuery } from '../../slices/userApiSlice';
 

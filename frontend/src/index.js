@@ -15,6 +15,7 @@ import AdminRoute from './Components/AdminRoutes';
 // Importing various screens/components used in the application
 import App from './App';
 import CartScreen from './Screens/CartScreen';
+import { HelmetProvider } from 'react-helmet-async';
 import HomeScreen from './Screens/HomeScreen';
 import LoginScreen from './Screens/LoginScreen';
 import OrderListScreen from './Screens/admin/OrderListScreen';
@@ -82,10 +83,14 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 // Rendering the application components
 root.render(
   <React.StrictMode>
+     <HelmetProvider>
+
+    
     <Provider store={store}>
       <PayPalScriptProvider>
         <RouterProvider router={router} />
       </PayPalScriptProvider>
     </Provider>
+    </HelmetProvider>
   </React.StrictMode>
 );

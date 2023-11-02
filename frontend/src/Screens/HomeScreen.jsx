@@ -7,6 +7,7 @@ import { Link, useParams } from "react-router-dom";
 
 import Loader from "../Components/Loader";
 import Message from "../Components/Message";
+import Meta from "../Components/Meta";
 import Paginate from "../Components/Paginate";
 import Product from "../Components/Product.jsx";
 import ProductCarousel from "../Components/ProductCarousel";
@@ -38,6 +39,7 @@ const HomeScreen = () => {
       ) : (
         // If there are no errors and data is loaded, render the following content:
         <>
+        <Meta title="Steno Market"/>
           <h1>Freshest Arrivals</h1>
           {/* This is a Bootstrap Row component. */}
           <Row>

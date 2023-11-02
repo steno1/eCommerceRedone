@@ -7,6 +7,7 @@ import {
      deleteProduct,
      getProducts,
      getSingleProduct,
+     getTopProducts,
      updateProduct
 } from '../controllers/productController.js';
 
@@ -15,7 +16,10 @@ import express from "express";
 const router = express.Router();
 
 // Setting up a route to handle GET requests to the root path ('/')
-router.route("/").get(getProducts).post(protect, admin, createProduct);
+router.route("/").get(getProducts)
+.post(protect, admin, createProduct);
+
+router.get("/top", getTopProducts)
 
 // Setting up a route to handle GET requests with a parameter 'id'
 // This can be accessed as req.params.id in the handler function

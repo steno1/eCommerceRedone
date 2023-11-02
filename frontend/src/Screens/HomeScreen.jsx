@@ -9,6 +9,7 @@ import Loader from "../Components/Loader";
 import Message from "../Components/Message";
 import Paginate from "../Components/Paginate";
 import Product from "../Components/Product.jsx";
+import ProductCarousel from "../Components/ProductCarousel";
 import React from 'react';
 import { useGetProductsQuery } from "../slices/productApiSlice";
 
@@ -22,7 +23,7 @@ const HomeScreen = () => {
   // This is the component's return statement.
   return (
     <>
-    {keyword && <Link to='/' className="btn btn-light"
+    {!keyword?<ProductCarousel/>: <Link to='/' className="btn btn-light"
      style={{fontWeight:"600", marginBottom:"8px"}}>Go Back</Link>}
       {/* This is a conditional rendering block. */}
       {isLoading ? (  

@@ -201,6 +201,15 @@ const deleteProduct = asyncHandler(async (req, res) => {
     }
 });
 
+//Get to rated product
+//access is public
+const getTopProducts = asyncHandler(async (req, res) => {
+   const products=await Product.find({}).sort({rating:-1}).limit(10);
+   res.status(200).json(products)
+});
+
+
 // Exporting the handler functions to be used in the Express routes
 export { getProducts, getSingleProduct,
-     createProduct, updateProduct, deleteProduct, createProductReview };
+     createProduct, updateProduct, deleteProduct,
+      createProductReview,getTopProducts };

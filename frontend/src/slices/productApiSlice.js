@@ -82,8 +82,16 @@ export const productApiSlice = apiSlice.injectEndpoints({
        
       }),
       invalidatesTags: ['Product'],
+    }),
+   
+    getTopProducts:builder.query({
+      query:()=>({
+        url:`${PRODUCTS_URL}/top`
+      }),
+      keepUnusedDataFor:5
     })
   }),
+
 });
 
 // Export objects and functions for accessing the API.
@@ -94,5 +102,6 @@ export const {
 useUpdateProductMutation,
 useUploadProductImageMutation,
 useDeleteProductMutation,
-useCreateReviewMutation
+useCreateReviewMutation,
+useGetTopProductsQuery
 } = productApiSlice;

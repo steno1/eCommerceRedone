@@ -42,13 +42,14 @@ const router = createBrowserRouter(
     // Defining routes for different pages/screens
     <Route path="/" element={<App/>}>
       <Route index={true} path='/' element={<HomeScreen/>}/>{/*  Route for the home screen*/}
+      <Route path='/search/:keyword' element={<HomeScreen/>}/>
       <Route path='/page/:pageNumber' element={<HomeScreen/>}/>
-
+      <Route path='/search/:keyword/page/:pageNumber' element={<HomeScreen/>}/>
       <Route path='/product/:id' element={<ProductScreen/>}/>{/*  Route for individual product screen*/} 
       <Route path='/cart' element={<CartScreen/>}/> {/*Route for the shopping cart screen */} 
       <Route path='/login' element={<LoginScreen/>}/>{/* Route for the login screen*/}
       <Route path='/register' element={<RegisterScreen/>}/>{/*Route for the registration screen */}
-
+   
       {/* Private Routes */}
       <Route path='' element={<PrivateRoute/>}> 
         <Route path='/shipping' element={<ShippingScreen/>}/> {/* Private route for shipping details*/}
@@ -64,6 +65,9 @@ const router = createBrowserRouter(
 
         <Route path='/admin/orderlist' element={<OrderListScreen/>}/>
         <Route path='/admin/productlist' element={<ProductListScreen/>}/>
+
+        <Route path='/admin/productlist/:pageNumber' element={<ProductListScreen/>}/>
+
         <Route path='/admin/product/:id/edit' element={<ProductEditScreen/>}/>
         <Route path='/admin/userlist' element={<UserListScreen/>}/>
         <Route path='/admin/user/:id/edit' element={<UserEditScreen/>}/>

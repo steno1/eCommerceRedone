@@ -46,16 +46,30 @@ const product = new Product({
     // Sending a JSON response with the created product and a status code of 201 (Created)
     res.status(201).json(createdProduct);
 });
-
 // Handler function for fetching all products
 const getProducts = asyncHandler(async (req, res) => {
-const pageSize=6;
-const  page=Number(req.query.pageNumber) || 1;
-const count=await Product.countDocuments();
+    // Set the number of products to display per page
+    const pageSize = 6;
+  
+    // Determine the current page number from the request query parameters
+    const page = Number(req.query.pageNumber) || 1;
+  
+    // Construct a keyword filter to search for products by name
+    const keyword = req.query.keyword
+      ? {
+          name: {
+            $regex: req.query.keyword, // Use a case-insensitive regular expression
+            $options: "i"
+          }
+        }
+      : {}; // An empty object means no specific keyword filter
+  
+    // Count the total number of products that match the filter
+    const count = await Product.countDocuments({ ...keyword });
 
     // Using asyncHandler to handle asynchronous operations in the route handler
     // Fetching all products from the database
-    const products = await Product.find({})
+    const products = await Product.find({...keyword})
     .limit(pageSize)
     .skip(pageSize * (page-1))
 

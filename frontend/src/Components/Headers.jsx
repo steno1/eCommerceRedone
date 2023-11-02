@@ -1,15 +1,14 @@
 import { FaShoppingCart, FaUser } from "react-icons/fa"; // Importing specific icons from the react-icons library
 
 import { Badge } from "react-bootstrap"; // Importing Badge component from react-bootstrap
-import Button from 'react-bootstrap/Button'; // Importing Button component from react-bootstrap
 import Container from 'react-bootstrap/Container'; // Importing Container component from react-bootstrap
-import Form from 'react-bootstrap/Form'; // Importing Form component from react-bootstrap
 import { LinkContainer } from "react-router-bootstrap"; // Importing LinkContainer component from react-router-bootstrap
 import Logo from "../assets/STENOMARKETLOGO.jpg"; // Importing an image asset
 import Nav from 'react-bootstrap/Nav'; // Importing Nav component from react-bootstrap
 import NavDropdown from 'react-bootstrap/NavDropdown'; // Importing NavDropdown component from react-bootstrap
 import Navbar from 'react-bootstrap/Navbar'; // Importing Navbar component from react-bootstrap
 import Offcanvas from 'react-bootstrap/Offcanvas'; // Importing Offcanvas component from react-bootstrap
+import SearchBox from "./SearchBox";
 import { logout } from "../slices/authSlice";
 import { useDispatch } from "react-redux";
 import { useLogoutApiCallMutation } from "../slices/userApiSlice";
@@ -151,18 +150,7 @@ const [logoutApiCall]=useLogoutApiCallMutation();
   </NavDropdown>
 )}
             </Nav>
-            <Form className="d-flex">
-              {/* Form component */}
-              <Form.Control
-                type="search"
-                placeholder="Search"
-                className="me-2"
-                aria-label="Search"
-              />
-              {/* Form.Control component */}
-              <Button variant="outline-success">Search</Button>
-              {/* Button component */}
-            </Form>
+           <SearchBox/>
           </Offcanvas.Body>
         </Navbar.Offcanvas>
       </Container>

@@ -7,15 +7,19 @@ import { useCreateProductMutation, useDeleteProductMutation } from '../../slices
 import { LinkContainer } from 'react-router-bootstrap'; // Import the 'LinkContainer' component from 'react-router-bootstrap'
 import Loader from '../../Components/Loader'; // Import the 'Loader' component from a relative path
 import Message from '../../Components/Message'; // Import the 'Message' component from a relative path
+import Paginate from '../../Components/Paginate';
 import React from 'react'; // Import the 'React' object from the 'react' library
 import { toast } from "react-toastify"; // Import the 'toast' function from 'react-toastify'
 import { useGetProductsQuery } from '../../slices/productApiSlice'; // Import the 'useGetProductsQuery' function from the 'productApiSlice'
+import { useParams } from 'react-router-dom';
 
 // Define a React functional component named 'ProductListScreen'.
 const ProductListScreen = () => {
+     const {pageNumber}=useParams();
     // Use the 'useGetProductsQuery' hook to query products data from the API.
-    const { data: products, isLoading, error, refetch } = useGetProductsQuery();
+    const { data, isLoading, error, refetch } = useGetProductsQuery({pageNumber});
 
+   
     // Use the 'useCreateProductMutation' hook to create a new product.
     const [createProduct, { isLoading: loadingCreate }] = useCreateProductMutation();
 
@@ -85,7 +89,7 @@ try {
                         </thead>
                         <tbody>
        {/* Map through the products and display them in rows. */}
-         {products.map((product) => (
+         {data.products.map((product) => (
            <tr key={product._id}>
         <td style={{ color: "black" }}>{product._id}</td>
          <td style={{ color: "black" }}>{product.name}</td>
@@ -111,6 +115,8 @@ try {
                             ))}
                         </tbody>
                     </Table>
+                    <Paginate pages={data.pages} page={data.page}
+                    isAdmin={true}/>
                 </>
             )}
         </>

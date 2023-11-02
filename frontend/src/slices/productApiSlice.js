@@ -14,11 +14,13 @@ export const productApiSlice = apiSlice.injectEndpoints({
     // Define an endpoint named 'getProducts'.
     getProducts: builder.query({
       // Define the behavior of the query.
-      query: ({pageNumber}) => ({
+      query: ({keyword,pageNumber}) => ({
         // Specify the URL to fetch data from using the 'PRODUCTS_URL' constant.
         url: PRODUCTS_URL,
         params:{
+          keyword,
           pageNumber
+        
         }
        
       }),

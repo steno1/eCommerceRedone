@@ -3,24 +3,27 @@
 import "./home.css";
 
 import { Col, Row } from "react-bootstrap";
+import { Link, useParams } from "react-router-dom";
 
 import Loader from "../Components/Loader";
 import Message from "../Components/Message";
+import Paginate from "../Components/Paginate";
 import Product from "../Components/Product.jsx";
 import React from 'react';
 import { useGetProductsQuery } from "../slices/productApiSlice";
-import { useParams } from "react-router-dom";
 
 // This defines a functional component named `HomeScreen`.
 const HomeScreen = () => {
-  const {pageNumber}=useParams()
+  const {pageNumber, keyword}=useParams()
 
   // This line uses the `useGetProductsQuery` hook, which returns an object with data about products, loading state, and errors.
-  const { data, isLoading, error } = useGetProductsQuery({pageNumber});
+  const { data, isLoading, error } = useGetProductsQuery({keyword,pageNumber});
 
   // This is the component's return statement.
   return (
     <>
+    {keyword && <Link to='/' className="btn btn-light"
+     style={{fontWeight:"600", marginBottom:"8px"}}>Go Back</Link>}
       {/* This is a conditional rendering block. */}
       {isLoading ? (  
         // If `isLoading` display Loader component".
@@ -45,6 +48,10 @@ const HomeScreen = () => {
               </Col>
             ))}
           </Row>
+          <Paginate
+          pages={data.pages}
+          page={data.page}
+          keyword={keyword?keyword:""} />
         </>
       )}
     </>

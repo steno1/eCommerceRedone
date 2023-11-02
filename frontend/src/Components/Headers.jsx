@@ -1,13 +1,12 @@
+import { Badge, NavbarCollapse } from "react-bootstrap"; // Importing Badge component from react-bootstrap
 import { FaShoppingCart, FaUser } from "react-icons/fa"; // Importing specific icons from the react-icons library
 
-import { Badge } from "react-bootstrap"; // Importing Badge component from react-bootstrap
 import Container from 'react-bootstrap/Container'; // Importing Container component from react-bootstrap
 import { LinkContainer } from "react-router-bootstrap"; // Importing LinkContainer component from react-router-bootstrap
 import Logo from "../assets/STENOMARKETLOGO.jpg"; // Importing an image asset
 import Nav from 'react-bootstrap/Nav'; // Importing Nav component from react-bootstrap
 import NavDropdown from 'react-bootstrap/NavDropdown'; // Importing NavDropdown component from react-bootstrap
 import Navbar from 'react-bootstrap/Navbar'; // Importing Navbar component from react-bootstrap
-import Offcanvas from 'react-bootstrap/Offcanvas'; // Importing Offcanvas component from react-bootstrap
 import SearchBox from "./SearchBox";
 import { logout } from "../slices/authSlice";
 import { useDispatch } from "react-redux";
@@ -33,9 +32,8 @@ const [logoutApiCall]=useLogoutApiCallMutation();
    }
   }
 
-  const expand = 'md'; // Defining a variable expand and setting it to the string 'md'
-
   return (
+    <header>
     <Navbar bg="primary" variant="dark" expand="lg" collapseOnSelect> 
       {/* Navbar component with specific props */}
       <style>
@@ -58,7 +56,7 @@ const [logoutApiCall]=useLogoutApiCallMutation();
         `}
       </style>
 
-      <Container fluid>
+      <Container >
         {/* Container component */}
         <LinkContainer to="/">
           {/* LinkContainer component with a link to the root route */}
@@ -70,25 +68,12 @@ const [logoutApiCall]=useLogoutApiCallMutation();
           </Navbar.Brand>
         </LinkContainer>
 
-        <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-${expand}`} />
+        <Navbar.Toggle aria-controls='basic-navbar-nav' />
         {/* Navbar.Toggle component */}
-        <Navbar.Offcanvas
-          id={`offcanvasNavbar-expand-${expand}`}
-          aria-labelledby={`offcanvasNavbarLabel-expand-${expand}`}
-          placement="end"
-        >
-          {/* Navbar.Offcanvas component */}
-          <Offcanvas.Header closeButton>
-            {/* Offcanvas.Header component with a close button */}
-            <Offcanvas.Title id={`offcanvasNavbarLabel-expand-${expand}`}>
-              Steno Market
-            </Offcanvas.Title>
-          </Offcanvas.Header>
-          <Offcanvas.Body>
-            {/* Offcanvas.Body component */}
-            <Nav className="justify-content-end flex-grow-1 pe-3">
-              {/* Nav component */}
-              <LinkContainer to="/cart">
+       <NavbarCollapse id = 'basic-navbar-nav'>
+          <Nav className="ms-auto">
+          <SearchBox/>
+          <LinkContainer to="/cart">
                 {/* LinkContainer component with a link to the cart route */}
                 <Nav.Link>
                   {/* Nav.Link component */}
@@ -100,6 +85,7 @@ const [logoutApiCall]=useLogoutApiCallMutation();
                   {/* Conditional rendering of a Badge component */}
                 </Nav.Link>
               </LinkContainer>
+              
               {userInfo ? (
                 // Conditional rendering based on the userInfo
                 <NavDropdown style={{marginBottom:"10px"}}
@@ -132,8 +118,10 @@ const [logoutApiCall]=useLogoutApiCallMutation();
                     </Nav.Link>
                 </LinkContainer>
               )}
+         
+             {/* admin link*/}
 {userInfo && userInfo.isAdmin && (
-  <NavDropdown title='Admin' id="adminmenu">
+  <NavDropdown title='Admin' id="adminmenu" style={{marginRight:"50px"}}>
      <LinkContainer to='/admin/productlist' >
 <NavDropdown.Item>Products</NavDropdown.Item>
   
@@ -150,11 +138,12 @@ const [logoutApiCall]=useLogoutApiCallMutation();
   </NavDropdown>
 )}
             </Nav>
-           <SearchBox/>
-          </Offcanvas.Body>
-        </Navbar.Offcanvas>
+            
+       </NavbarCollapse>
+          
       </Container>
     </Navbar>
+    </header>
   );
 }
 

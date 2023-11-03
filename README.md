@@ -1,51 +1,51 @@
-E-Commerce Website Documentation
-Welcome to the documentation for our e-commerce website built using the MERN stack. This project is a full-fledged e-commerce platform with various features and integrations. Please follow the instructions below to set up, use, and customize the application.
+# E-Commerce Website Documentation
 
-Table of Contents
-Getting Started
-Features
-Prerequisites
-Installation
-Usage
-Secure Payment Processing
-Responsive Design
-Efficient Navigation
-Data Security
-Admin Functionality
-Review and Rating
-Search and Sorting
-Deployment
-Getting Started
-To get started with the e-commerce website, follow these steps:
+## Table of Contents
 
-1. Clone the repository
-bash
-Copy code
+- [Getting Started](#getting-started)
+- [Features](#features)
+- [Prerequisites](#prerequisites)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Secure Payment Processing](#secure-payment-processing)
+- [Responsive Design](#responsive-design)
+- [Efficient Navigation](#efficient-navigation)
+- [Data Security](#data-security)
+- [Admin Functionality](#admin-functionality)
+- [Review and Rating](#review-and-rating)
+- [Search and Sorting](#search-and-sorting)
+- [Deployment](#deployment)
+
+## Getting Started
+
+### 1. Clone the Repository
+
+```
 git clone <repository_url>
 cd <repository_name>
 2. Set Up the Frontend
-bash
-Copy code
+
 cd frontend
 npm install
+
 3. Set Up the Backend
-bash
-Copy code
+
 cd backend
 npm install
 Features
-List products
-Product details page
-User authentication with JWT
-Shopping cart functionality
-PayPal integration for secure payment processing
-Responsive design for consistent shopping on any device
-Efficient navigation using React Router integration
-Admin functionality for managing users, products, and orders
-Review and rating functionality
-Search and sorting options
-Database powered by MongoDB and Mongoose
-Error handling with custom error handlers
+List Products
+Product Details Page
+User Authentication with JWT
+Shopping Cart Functionality
+PayPal Integration for Secure Payment Processing
+Responsive Design for Consistent Shopping on Any Device
+Efficient Navigation Using React Router Integration
+Admin Functionality for Managing Users, Products, and Orders
+Review and Rating Functionality
+Search and Sorting Options
+Database Powered by MongoDB and Mongoose
+Error Handling with Custom Error Handlers
+
 Prerequisites
 Before you start, make sure you have the following installed:
 
@@ -56,8 +56,7 @@ Git
 Installation
 Follow these steps to install the necessary packages and dependencies:
 
-bash
-Copy code
+
 # Install frontend dependencies
 cd frontend
 npm install
@@ -69,13 +68,11 @@ Usage
 To run the project locally, follow these steps:
 
 Start the Backend Server
-bash
-Copy code
+
 cd backend
 npm start
 Start the Frontend Development Server
-bash
-Copy code
+
 cd frontend
 npm start
 Now you can access the website at http://localhost:3000.

@@ -73,7 +73,7 @@ try {
             {loadingDelete && (<Loader/>)}
 
             {/* Conditional rendering based on loading and error states. */}
-            {isLoading ? (<Loader/>) : error ? <Message>{error.message}</Message> : (
+            {isLoading ? (<Loader/>) : error ? <Message>{error?.data?.message}</Message> : (
                 <>
                     {/* Display a table for listing products. */}
    <Table striped bordered responsive hover className='table-sm'>

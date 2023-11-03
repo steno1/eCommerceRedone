@@ -109,7 +109,7 @@ const ProductEditScreen = () => {
                     <Loader />
                 ) : error ? (
                     // Handle loading and error states
-                    <Message variant='danger'>{error.message}</Message>
+                    <Message variant='danger'>{error?.data?.message}</Message>
                 ) : (
                     <Form onSubmit={submitHandler}>
                         {/* Render input fields and form controls for updating product details */}

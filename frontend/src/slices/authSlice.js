@@ -26,7 +26,7 @@ state.userInfo = action.payload; // Update the 'userInfo' field in the state wit
         },
         logout:(state, action)=>{
             state.userInfo=null;
-            localStorage.removeItem("userInfo")
+            localStorage.clear();
         }
 
     }

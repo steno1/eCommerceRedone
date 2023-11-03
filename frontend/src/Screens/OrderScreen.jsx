@@ -101,7 +101,7 @@ const OrderScreen = () => {
         
                 try {
                     // Try to pay the order with provided details.
-                    await payOrder({orderId, details});
+                    await payOrder({orderId, details}).unwrap();
                     // Mark the order as paid.
         
                     refetch();
@@ -180,7 +180,7 @@ const OrderScreen = () => {
       }
       // Render an error message if there is an error
       else if (error) {
-          return <Message variant='danger'>{error.message}</Message>;
+          return <Message variant='danger'>{error?.data?.message}</Message>;
       }
       // Render the order details if data is available
       else {
@@ -210,14 +210,14 @@ const OrderScreen = () => {
                               {/* Display payment method */}
                               <ListGroupItem style={{ color: "black" }}>
                                   <h2>Payment Method</h2>
-                                  <p><strong>Method: </strong></p>
-                                  <p style={{ marginBottom: "15px" }}>{order.paymentMethod}</p>
+                            <p><strong>Method: </strong></p>
+         <p style={{ marginBottom: "15px" }}>{order.paymentMethod}</p>
   
                                   {/* Display payment status */}
-                                  {order.isPaid ? (
-                                      <Message variant="success">
-                                          Paid on {order.paidAt}
-                                      </Message>
+                           {order.isPaid ? (
+                          <Message variant="success">
+                             Paid on {order.paidAt}
+                                 </Message>
                                   ) : (
                                       <Message variant="danger">
                                           Not Paid
@@ -231,15 +231,15 @@ const OrderScreen = () => {
                                       <ListGroupItem key={index} style={{ color: "black" }}>
                                           <Row>
                                               <Col md={2}>
-                                                  <Image src={item.image} fluid rounded />
+                             <Image src={item.image} fluid rounded />
                                               </Col>
                                               <Col>
-                                                  <Link to={`/product/${item.product}`}>
+                                  <Link to={`/product/${item.product}`}>
                                                       {item.name}
                                                   </Link>
                                               </Col>
                                               <Col md={4}>
-                                                  {item.qty} x  ₦{item.price} = ₦{item.qty * item.price}
+                             {item.qty} x  ${item.price} = ${item.qty * item.price}
                                               </Col>
                                           </Row>
                                       </ListGroupItem>

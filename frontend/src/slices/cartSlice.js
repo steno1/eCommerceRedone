@@ -49,6 +49,7 @@ return updateCart(state)
 state.cartItems=[]
 return updateCart(state)
     },
+    resetCart:(state)=>(state=initialState)
    
   },
 });
@@ -56,5 +57,5 @@ return updateCart(state)
 // Exporting the action creators (addToCart, removeItem, clearCart) and the reducer
 export const { addToCart, removeFromCart,clearCart, 
   saveShippingAddress, savePaymentMethod,
-    clearCartItems } = cartSlice.actions;
+    clearCartItems, resetCart } = cartSlice.actions;
 export default cartSlice.reducer;

@@ -9,6 +9,7 @@ import NavDropdown from 'react-bootstrap/NavDropdown'; // Importing NavDropdown 
 import Navbar from 'react-bootstrap/Navbar'; // Importing Navbar component from react-bootstrap
 import SearchBox from "./SearchBox";
 import { logout } from "../slices/authSlice";
+import { resetCart } from "../slices/cartSlice";
 import { useDispatch } from "react-redux";
 import { useLogoutApiCallMutation } from "../slices/userApiSlice";
 import {useNavigate} from "react-router-dom"
@@ -26,6 +27,7 @@ const [logoutApiCall]=useLogoutApiCallMutation();
    try {
     await logoutApiCall().unwrap();
     dispatch(logout());
+    dispatch(resetCart());
     navigate("/login");
    } catch (error) {
     console.log(error);
@@ -121,7 +123,7 @@ const [logoutApiCall]=useLogoutApiCallMutation();
          
              {/* admin link*/}
 {userInfo && userInfo.isAdmin && (
-  <NavDropdown title='Admin' id="adminmenu" style={{marginRight:"50px"}}>
+  <NavDropdown title='Admin' id="adminmenu">
      <LinkContainer to='/admin/productlist' >
 <NavDropdown.Item>Products</NavDropdown.Item>
   

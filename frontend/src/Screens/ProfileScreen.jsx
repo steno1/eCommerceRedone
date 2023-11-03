@@ -120,14 +120,14 @@ Update
 {orders.map((order)=>(
     <tr key={order._id}>
 <td>{order._id}</td>
-<td>{order.createdAt.substring(0, 10)}</td>
+<td>{order.createdAt}</td>
 <td>${order.totalPrice}</td>
 <td>{order.isPaid?(
-    order.paidAt.substring(0, 10)
+    order.paidAt
 ):(<FaTimes style={{color:"red"}}/>)}</td>
 
 <td>{order.isDelivered?(
-    order.deliveredAt.substring(0, 10)
+    order.deliveredAt
 ):(<FaTimes style={{color:"red"}}/>)}</td>
 <td>
     <LinkContainer to={`/order/${order._id}`}>

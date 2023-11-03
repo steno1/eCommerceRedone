@@ -32,7 +32,7 @@ npm install
 
 cd backend
 npm install
-Features
+   # FEATURES
 List Products
 Product Details Page
 User Authentication with JWT
